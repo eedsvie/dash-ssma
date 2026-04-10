@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Treinamentos - Aproveitamento e Inscrições</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        slate: {
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #0f172a; }
+        @keyframes fade-in-up {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up { animation: fade-in-up 0.6s ease-out forwards; opacity: 0; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    </style>
+</head>
+<body class="text-slate-100 font-sans min-h-screen">
+
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <header class="mb-10 animate-fade-in-up">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600">
+                Dashboard de Inscrições nos Treinamentos SSMA - Setor 8<br>
+                <span class="text-2xl md:text-3xl">(NR-01 / NR-06 / NR 18 e Reciclagem de Monitores de Segurança)</span>
+            </h2>
+            <p class="text-slate-400 mt-2 font-semibold">Atualizado em: <span class="text-slate-300">31/03/2026 10:06:59</span></p>
+        </header>
+
+        <!-- Navegação de Abas -->
+        <div class="mb-8 flex space-x-6 border-b border-slate-700 animate-fade-in-up" style="animation-delay: 50ms;">
+            <button id="tab-resumo" class="pb-3 text-blue-400 border-b-2 border-blue-500 font-semibold focus:outline-none transition-colors text-lg" onclick="switchTab('resumo')">Visão Geral</button>
+            <button id="tab-detalhes" class="pb-3 text-slate-400 border-b-2 border-transparent hover:text-slate-200 hover:border-slate-500 font-semibold focus:outline-none transition-colors text-lg" onclick="switchTab('detalhes')">Lista por Congregação</button>
+        </div>
+
+        <!-- CONTEÚDO DA ABA DE RESUMO -->
+        <div id="view-resumo">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                
+                <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-xl animate-fade-in-up" style="animation-delay: 100ms;">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-sm font-semibold text-slate-400 mb-1">Total Previstos</p>
+                            <h2 class="text-4xl font-extrabold text-white">363</h2>
+                        </div>
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-lg">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-xl animate-fade-in-up" style="animation-delay: 200ms;">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-sm font-semibold text-slate-400 mb-1">Total Inscritos</p>
+                            <h2 class="text-4xl font-extrabold text-white">212</h2>
+                        </div>
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center shadow-lg">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-emerald-500 hover:shadow-xl animate-fade-in-up" style="animation-delay: 300ms;">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-sm font-semibold text-slate-400 mb-1">Total Treinados</p>
+                            <h2 class="text-4xl font-extrabold text-white">179</h2>
+                        </div>
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center shadow-lg">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-purple-500 hover:shadow-xl animate-fade-in-up" style="animation-delay: 400ms;">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-sm font-semibold text-slate-400 mb-1">% Aproveitamento</p>
+                            <h2 class="text-4xl font-extrabold text-white">49.3%</h2>
+                        </div>
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center shadow-lg">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                        </div>
+                    </div>
+                    <div class="w-full bg-slate-700 rounded-full h-1.5 mt-4">
+                        <div class="bg-purple-500 h-1.5 rounded-full" style="width: 49.311294765840216%"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mb-6 mt-12 animate-fade-in-up" style="animation-delay: 400ms;">
+                <h2 class="text-2xl font-bold text-slate-200">
+                    Detalhamento por Congregação
+                </h2>
+                <div class="h-1 w-20 bg-blue-500 rounded mt-2"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-12">
+                
+        <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-xl animate-fade-in-up flex flex-col justify-between" style="animation-delay: 0ms;">
+            <div>
+                <h3 class="text-lg font-bold text-slate-100 mb-4">Cidade Ipava</h3>
+                
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Esperados / Inscritos</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-lg font-bold text-slate-300">11</span>
+                            <span class="text-sm font-semibold text-slate-500">/ 6</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center bg-emerald-900/20 p-3 rounded-lg border border-emerald-900/30">
+                        <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Treinados</span>
+                        <span class="text-xl font-extrabold text-emerald-500">7</span>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-rose-900/20 p-3 rounded-lg border border-rose-900/30">
+                        <span class="text-xs font-semibold text-rose-400 uppercase tracking-wide">AUSENTE</span>
+                        <span class="text-lg font-extrabold text-rose-500">0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de Progresso do Aproveitamento -->
+            <div class="mt-5">
+                <div class="flex justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Aproveitamento</span>
+                    <span class="text-xs font-extrabold text-blue-500">63.6%</span>
+                </div>
+                <div class="w-full bg-slate-700/50 rounded-full h-2.5 overflow-hidden">
+                    <div class="bg-blue-500 h-2.5 rounded-full transition-all duration-1000" style="width: 63.63636363636363%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-xl animate-fade-in-up flex flex-col justify-between" style="animation-delay: 50ms;">
+            <div>
+                <h3 class="text-lg font-bold text-slate-100 mb-4">Jd. Amália</h3>
+                
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Esperados / Inscritos</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-lg font-bold text-slate-300">8</span>
+                            <span class="text-sm font-semibold text-slate-500">/ 2</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center bg-emerald-900/20 p-3 rounded-lg border border-emerald-900/30">
+                        <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Treinados</span>
+                        <span class="text-xl font-extrabold text-emerald-500">3</span>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-rose-900/20 p-3 rounded-lg border border-rose-900/30">
+                        <span class="text-xs font-semibold text-rose-400 uppercase tracking-wide">AUSENTE</span>
+                        <span class="text-lg font-extrabold text-rose-500">0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de Progresso do Aproveitamento -->
+            <div class="mt-5">
+                <div class="flex justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Aproveitamento</span>
+                    <span class="text-xs font-extrabold text-rose-500">37.5%</span>
+                </div>
+                <div class="w-full bg-slate-700/50 rounded-full h-2.5 overflow-hidden">
+                    <div class="bg-rose-500 h-2.5 rounded-full transition-all duration-1000" style="width: 37.5%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-xl animate-fade-in-up flex flex-col justify-between" style="animation-delay: 100ms;">
+            <div>
+                <h3 class="text-lg font-bold text-slate-100 mb-4">Jd. Aracati</h3>
+                
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Esperados / Inscritos</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-lg font-bold text-slate-300">3</span>
+                            <span class="text-sm font-semibold text-slate-500">/ 1</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center bg-emerald-900/20 p-3 rounded-lg border border-emerald-900/30">
+                        <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Treinados</span>
+                        <span class="text-xl font-extrabold text-emerald-500">1</span>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-rose-900/20 p-3 rounded-lg border border-rose-900/30">
+                        <span class="text-xs font-semibold text-rose-400 uppercase tracking-wide">AUSENTE</span>
+                        <span class="text-lg font-extrabold text-rose-500">0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de Progresso do Aproveitamento -->
+            <div class="mt-5">
+                <div class="flex justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Aproveitamento</span>
+                    <span class="text-xs font-extrabold text-rose-500">33.3%</span>
+                </div>
+                <div class="w-full bg-slate-700/50 rounded-full h-2.5 overflow-hidden">
+                    <div class="bg-rose-500 h-2.5 rounded-full transition-all duration-1000" style="width: 33.33333333333333%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-xl animate-fade-in-up flex flex-col justify-between" style="animation-delay: 150ms;">
+            <div>
+                <h3 class="text-lg font-bold text-slate-100 mb-4">Jd. Capão Redondo</h3>
+                
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Esperados / Inscritos</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-lg font-bold text-slate-300">17</span>
+                            <span class="text-sm font-semibold text-slate-500">/ 11</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center bg-emerald-900/20 p-3 rounded-lg border border-emerald-900/30">
+                        <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Treinados</span>
+                        <span class="text-xl font-extrabold text-emerald-500">9</span>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-rose-900/20 p-3 rounded-lg border border-rose-900/30">
+                        <span class="text-xs font-semibold text-rose-400 uppercase tracking-wide">AUSENTE</span>
+                        <span class="text-lg font-extrabold text-rose-500">2</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de Progresso do Aproveitamento -->
+            <div class="mt-5">
+                <div class="flex justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Aproveitamento</span>
+                    <span class="text-xs font-extrabold text-blue-500">52.9%</span>
+                </div>
+                <div class="w-full bg-slate-700/50 rounded-full h-2.5 overflow-hidden">
+                    <div class="bg-blue-500 h-2.5 rounded-full transition-all duration-1000" style="width: 52.94117647058824%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-xl animate-fade-in-up flex flex-col justify-between" style="animation-delay: 200ms;">
+            <div>
+                <h3 class="text-lg font-bold text-slate-100 mb-4">Jd. Célia</h3>
+                
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Esperados / Inscritos</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-lg font-bold text-slate-300">7</span>
+                            <span class="text-sm font-semibold text-slate-500">/ 4</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center bg-emerald-900/20 p-3 rounded-lg border border-emerald-900/30">
+                        <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Treinados</span>
+                        <span class="text-xl font-extrabold text-emerald-500">4</span>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-rose-900/20 p-3 rounded-lg border border-rose-900/30">
+                        <span class="text-xs font-semibold text-rose-400 uppercase tracking-wide">AUSENTE</span>
+                        <span class="text-lg font-extrabold text-rose-500">0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de Progresso do Aproveitamento -->
+            <div class="mt-5">
+                <div class="flex justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Aproveitamento</span>
+                    <span class="text-xs font-extrabold text-blue-500">57.1%</span>
+                </div>
+                <div class="w-full bg-slate-700/50 rounded-full h-2.5 overflow-hidden">
+                    <div class="bg-blue-500 h-2.5 rounded-full transition-all duration-1000" style="width: 57.14285714285714%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-xl animate-fade-in-up flex flex-col justify-between" style="animation-delay: 250ms;">
+            <div>
+                <h3 class="text-lg font-bold text-slate-100 mb-4">Jd. Das Flores</h3>
+                
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Esperados / Inscritos</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-lg font-bold text-slate-300">10</span>
+                            <span class="text-sm font-semibold text-slate-500">/ 15</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center bg-emerald-900/20 p-3 rounded-lg border border-emerald-900/30">
+                        <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Treinados</span>
+                        <span class="text-xl font-extrabold text-emerald-500">10</span>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-rose-900/20 p-3 rounded-lg border border-rose-900/30">
+                        <span class="text-xs font-semibold text-rose-400 uppercase tracking-wide">AUSENTE</span>
+                        <span class="text-lg font-extrabold text-rose-500">5</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de Progresso do Aproveitamento -->
+            <div class="mt-5">
+                <div class="flex justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Aproveitamento</span>
+                    <span class="text-xs font-extrabold text-emerald-500">100.0%</span>
+                </div>
+                <div class="w-full bg-slate-700/50 rounded-full h-2.5 overflow-hidden">
+                    <div class="bg-emerald-500 h-2.5 rounded-full transition-all duration-1000" style="width: 100.0%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-xl animate-fade-in-up flex flex-col justify-between" style="animation-delay: 300ms;">
+            <div>
+                <h3 class="text-lg font-bold text-slate-100 mb-4">Jd. Das Palmas</h3>
+                
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Esperados / Inscritos</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-lg font-bold text-slate-300">7</span>
+                            <span class="text-sm font-semibold text-slate-500">/ 7</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center bg-emerald-900/20 p-3 rounded-lg border border-emerald-900/30">
+                        <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Treinados</span>
+                        <span class="text-xl font-extrabold text-emerald-500">7</span>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-rose-900/20 p-3 rounded-lg border border-rose-900/30">
+                        <span class="text-xs font-semibold text-rose-400 uppercase tracking-wide">AUSENTE</span>
+                        <span class="text-lg font-extrabold text-rose-500">0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de Progresso do Aproveitamento -->
+            <div class="mt-5">
+                <div class="flex justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Aproveitamento</span>
+                    <span class="text-xs font-extrabold text-emerald-500">100.0%</span>
+                </div>
+                <div class="w-full bg-slate-700/50 rounded-full h-2.5 overflow-hidden">
+                    <div class="bg-emerald-500 h-2.5 rounded-full transition-all duration-1000" style="width: 100.0%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-xl animate-fade-in-up flex flex-col justify-between" style="animation-delay: 350ms;">
+            <div>
+                <h3 class="text-lg font-bold text-slate-100 mb-4">Jd. Guarujá</h3>
+                
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Esperados / Inscritos</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-lg font-bold text-slate-300">23</span>
+                            <span class="text-sm font-semibold text-slate-500">/ 15</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center bg-emerald-900/20 p-3 rounded-lg border border-emerald-900/30">
+                        <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Treinados</span>
+                        <span class="text-xl font-extrabold text-emerald-500">12</span>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-rose-900/20 p-3 rounded-lg border border-rose-900/30">
+                        <span class="text-xs font-semibold text-rose-400 uppercase tracking-wide">AUSENTE</span>
+                        <span class="text-lg font-extrabold text-rose-500">3</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de Progresso do Aproveitamento -->
+            <div class="mt-5">
+                <div class="flex justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Aproveitamento</span>
+                    <span class="text-xs font-extrabold text-blue-500">52.2%</span>
+                </div>
+                <div class="w-full bg-slate-700/50 rounded-full h-2.5 overflow-hidden">
+                    <div class="bg-blue-500 h-2.5 rounded-full transition-all duration-1000" style="width: 52.17391304347826%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-xl animate-fade-in-up flex flex-col justify-between" style="animation-delay: 400ms;">
+            <div>
+                <h3 class="text-lg font-bold text-slate-100 mb-4">Jd. Ibirapuera</h3>
+                
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Esperados / Inscritos</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-lg font-bold text-slate-300">27</span>
+                            <span class="text-sm font-semibold text-slate-500">/ 8</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center bg-emerald-900/20 p-3 rounded-lg border border-emerald-900/30">
+                        <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Treinados</span>
+                        <span class="text-xl font-extrabold text-emerald-500">7</span>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-rose-900/20 p-3 rounded-lg border border-rose-900/30">
+                        <span class="text-xs font-semibold text-rose-400 uppercase tracking-wide">AUSENTE</span>
+                        <span class="text-lg font-extrabold text-rose-500">1</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de Progresso do Aproveitamento -->
+            <div class="mt-5">
+                <div class="flex justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Aproveitamento</span>
+                    <span class="text-xs font-extrabold text-rose-500">25.9%</span>
+                </div>
+                <div class="w-full bg-slate-700/50 rounded-full h-2.5 overflow-hidden">
+                    <div class="bg-rose-500 h-2.5 rounded-full transition-all duration-1000" style="width: 25.925925925925924%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-xl animate-fade-in-up flex flex-col justify-between" style="animation-delay: 450ms;">
+            <div>
+                <h3 class="text-lg font-bold text-slate-100 mb-4">Jd. Ingá</h3>
+                
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Esperados / Inscritos</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-lg font-bold text-slate-300">11</span>
+                            <span class="text-sm font-semibold text-slate-500">/ 1</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center bg-emerald-900/20 p-3 rounded-lg border border-emerald-900/30">
+                        <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Treinados</span>
+                        <span class="text-xl font-extrabold text-emerald-500">3</span>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-rose-900/20 p-3 rounded-lg border border-rose-900/30">
+                        <span class="text-xs font-semibold text-rose-400 uppercase tracking-wide">AUSENTE</span>
+                        <span class="text-lg font-extrabold text-rose-500">0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de Progresso do Aproveitamento -->
+            <div class="mt-5">
+                <div class="flex justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Aproveitamento</span>
+                    <span class="text-xs font-extrabold text-rose-500">27.3%</span>
+                </div>
+                <div class="w-full bg-slate-700/50 rounded-full h-2.5 overflow-hidden">
+                    <div class="bg-rose-500 h-2.5 rounded-full transition-all duration-1000" style="width: 27.27272727272727%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-xl animate-fade-in-up flex flex-col justify-between" style="animation-delay: 500ms;">
+            <div>
+                <h3 class="text-lg font-bold text-slate-100 mb-4">Jd. Leônidas Moreira</h3>
+                
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Esperados / Inscritos</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-lg font-bold text-slate-300">20</span>
+                            <span class="text-sm font-semibold text-slate-500">/ 20</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center bg-emerald-900/20 p-3 rounded-lg border border-emerald-900/30">
+                        <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Treinados</span>
+                        <span class="text-xl font-extrabold text-emerald-500">14</span>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-rose-900/20 p-3 rounded-lg border border-rose-900/30">
+                        <span class="text-xs font-semibold text-rose-400 uppercase tracking-wide">AUSENTE</span>
+                        <span class="text-lg font-extrabold text-rose-500">6</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de Progresso do Aproveitamento -->
+            <div class="mt-5">
+                <div class="flex justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Aproveitamento</span>
+                    <span class="text-xs font-extrabold text-blue-500">70.0%</span>
+                </div>
+                <div class="w-full bg-slate-700/50 rounded-full h-2.5 overflow-hidden">
+                    <div class="bg-blue-500 h-2.5 rounded-full transition-all duration-1000" style="width: 70.0%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-xl animate-fade-in-up flex flex-col justify-between" style="animation-delay: 550ms;">
+            <div>
+                <h3 class="text-lg font-bold text-slate-100 mb-4">Jd. Lídia</h3>
+                
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Esperados / Inscritos</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-lg font-bold text-slate-300">7</span>
+                            <span class="text-sm font-semibold text-slate-500">/ 10</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center bg-emerald-900/20 p-3 rounded-lg border border-emerald-900/30">
+                        <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Treinados</span>
+                        <span class="text-xl font-extrabold text-emerald-500">7</span>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-rose-900/20 p-3 rounded-lg border border-rose-900/30">
+                        <span class="text-xs font-semibold text-rose-400 uppercase tracking-wide">AUSENTE</span>
+                        <span class="text-lg font-extrabold text-rose-500">3</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de Progresso do Aproveitamento -->
+            <div class="mt-5">
+                <div class="flex justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Aproveitamento</span>
+                    <span class="text-xs font-extrabold text-emerald-500">100.0%</span>
+                </div>
+                <div class="w-full bg-slate-700/50 rounded-full h-2.5 overflow-hidden">
+                    <div class="bg-emerald-500 h-2.5 rounded-full transition-all duration-1000" style="width: 100.0%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-xl animate-fade-in-up flex flex-col justify-between" style="animation-delay: 600ms;">
+            <div>
+                <h3 class="text-lg font-bold text-slate-100 mb-4">Jd. Nakamura</h3>
+                
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Esperados / Inscritos</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-lg font-bold text-slate-300">10</span>
+                            <span class="text-sm font-semibold text-slate-500">/ 4</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center bg-emerald-900/20 p-3 rounded-lg border border-emerald-900/30">
+                        <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Treinados</span>
+                        <span class="text-xl font-extrabold text-emerald-500">5</span>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-rose-900/20 p-3 rounded-lg border border-rose-900/30">
+                        <span class="text-xs font-semibold text-rose-400 uppercase tracking-wide">AUSENTE</span>
+                        <span class="text-lg font-extrabold text-rose-500">0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de Progresso do Aproveitamento -->
+            <div class="mt-5">
+                <div class="flex justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Aproveitamento</span>
+                    <span class="text-xs font-extrabold text-blue-500">50.0%</span>
+                </div>
+                <div class="w-full bg-slate-700/50 rounded-full h-2.5 overflow-hidden">
+                    <div class="bg-blue-500 h-2.5 rounded-full transition-all duration-1000" style="width: 50.0%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-xl animate-fade-in-up flex flex-col justify-between" style="animation-delay: 650ms;">
+            <div>
+                <h3 class="text-lg font-bold text-slate-100 mb-4">Jd. Novo Oriente</h3>
+                
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Esperados / Inscritos</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-lg font-bold text-slate-300">11</span>
+                            <span class="text-sm font-semibold text-slate-500">/ 7</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center bg-emerald-900/20 p-3 rounded-lg border border-emerald-900/30">
+                        <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Treinados</span>
+                        <span class="text-xl font-extrabold text-emerald-500">7</span>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-rose-900/20 p-3 rounded-lg border border-rose-900/30">
+                        <span class="text-xs font-semibold text-rose-400 uppercase tracking-wide">AUSENTE</span>
+                        <span class="text-lg font-extrabold text-rose-500">0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de Progresso do Aproveitamento -->
+            <div class="mt-5">
+                <div class="flex justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Aproveitamento</span>
+                    <span class="text-xs font-extrabold text-blue-500">63.6%</span>
+                </div>
+                <div class="w-full bg-slate-700/50 rounded-full h-2.5 overflow-hidden">
+                    <div class="bg-blue-500 h-2.5 rounded-full transition-all duration-1000" style="width: 63.63636363636363%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-xl animate-fade-in-up flex flex-col justify-between" style="animation-delay: 700ms;">
+            <div>
+                <h3 class="text-lg font-bold text-slate-100 mb-4">Jd. Piracuama</h3>
+                
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Esperados / Inscritos</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-lg font-bold text-slate-300">4</span>
+                            <span class="text-sm font-semibold text-slate-500">/ 2</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center bg-emerald-900/20 p-3 rounded-lg border border-emerald-900/30">
+                        <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Treinados</span>
+                        <span class="text-xl font-extrabold text-emerald-500">1</span>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-rose-900/20 p-3 rounded-lg border border-rose-900/30">
+                        <span class="text-xs font-semibold text-rose-400 uppercase tracking-wide">AUSENTE</span>
+                        <span class="text-lg font-extrabold text-rose-500">1</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de Progresso do Aproveitamento -->
+            <div class="mt-5">
+                <div class="flex justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Aproveitamento</span>
+                    <span class="text-xs font-extrabold text-rose-500">25.0%</span>
+                </div>
+                <div class="w-full bg-slate-700/50 rounded-full h-2.5 overflow-hidden">
+                    <div class="bg-rose-500 h-2.5 rounded-full transition-all duration-1000" style="width: 25.0%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-xl animate-fade-in-up flex flex-col justify-between" style="animation-delay: 750ms;">
+            <div>
+                <h3 class="text-lg font-bold text-slate-100 mb-4">Jd. Sete Lagos</h3>
+                
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Esperados / Inscritos</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-lg font-bold text-slate-300">6</span>
+                            <span class="text-sm font-semibold text-slate-500">/ 5</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center bg-emerald-900/20 p-3 rounded-lg border border-emerald-900/30">
+                        <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Treinados</span>
+                        <span class="text-xl font-extrabold text-emerald-500">5</span>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-rose-900/20 p-3 rounded-lg border border-rose-900/30">
+                        <span class="text-xs font-semibold text-rose-400 uppercase tracking-wide">AUSENTE</span>
+                        <span class="text-lg font-extrabold text-rose-500">0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de Progresso do Aproveitamento -->
+            <div class="mt-5">
+                <div class="flex justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Aproveitamento</span>
+                    <span class="text-xs font-extrabold text-blue-500">83.3%</span>
+                </div>
+                <div class="w-full bg-slate-700/50 rounded-full h-2.5 overflow-hidden">
+                    <div class="bg-blue-500 h-2.5 rounded-full transition-all duration-1000" style="width: 83.33333333333334%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-xl animate-fade-in-up flex flex-col justify-between" style="animation-delay: 800ms;">
+            <div>
+                <h3 class="text-lg font-bold text-slate-100 mb-4">Jd. São Francisco</h3>
+                
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Esperados / Inscritos</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-lg font-bold text-slate-300">11</span>
+                            <span class="text-sm font-semibold text-slate-500">/ 8</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center bg-emerald-900/20 p-3 rounded-lg border border-emerald-900/30">
+                        <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Treinados</span>
+                        <span class="text-xl font-extrabold text-emerald-500">9</span>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-rose-900/20 p-3 rounded-lg border border-rose-900/30">
+                        <span class="text-xs font-semibold text-rose-400 uppercase tracking-wide">AUSENTE</span>
+                        <span class="text-lg font-extrabold text-rose-500">0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de Progresso do Aproveitamento -->
+            <div class="mt-5">
+                <div class="flex justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Aproveitamento</span>
+                    <span class="text-xs font-extrabold text-blue-500">81.8%</span>
+                </div>
+                <div class="w-full bg-slate-700/50 rounded-full h-2.5 overflow-hidden">
+                    <div class="bg-blue-500 h-2.5 rounded-full transition-all duration-1000" style="width: 81.81818181818183%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-xl animate-fade-in-up flex flex-col justify-between" style="animation-delay: 850ms;">
+            <div>
+                <h3 class="text-lg font-bold text-slate-100 mb-4">Jd. São Lourenço</h3>
+                
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Esperados / Inscritos</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-lg font-bold text-slate-300">17</span>
+                            <span class="text-sm font-semibold text-slate-500">/ 6</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center bg-emerald-900/20 p-3 rounded-lg border border-emerald-900/30">
+                        <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Treinados</span>
+                        <span class="text-xl font-extrabold text-emerald-500">7</span>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-rose-900/20 p-3 rounded-lg border border-rose-900/30">
+                        <span class="text-xs font-semibold text-rose-400 uppercase tracking-wide">AUSENTE</span>
+                        <span class="text-lg font-extrabold text-rose-500">0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de Progresso do Aproveitamento -->
+            <div class="mt-5">
+                <div class="flex justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Aproveitamento</span>
+                    <span class="text-xs font-extrabold text-rose-500">41.2%</span>
+                </div>
+                <div class="w-full bg-slate-700/50 rounded-full h-2.5 overflow-hidden">
+                    <div class="bg-rose-500 h-2.5 rounded-full transition-all duration-1000" style="width: 41.17647058823529%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-xl animate-fade-in-up flex flex-col justify-between" style="animation-delay: 900ms;">
+            <div>
+                <h3 class="text-lg font-bold text-slate-100 mb-4">Jd. São Luiz</h3>
+                
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Esperados / Inscritos</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-lg font-bold text-slate-300">7</span>
+                            <span class="text-sm font-semibold text-slate-500">/ 7</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center bg-emerald-900/20 p-3 rounded-lg border border-emerald-900/30">
+                        <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Treinados</span>
+                        <span class="text-xl font-extrabold text-emerald-500">5</span>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-rose-900/20 p-3 rounded-lg border border-rose-900/30">
+                        <span class="text-xs font-semibold text-rose-400 uppercase tracking-wide">AUSENTE</span>
+                        <span class="text-lg font-extrabold text-rose-500">2</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de Progresso do Aproveitamento -->
+            <div class="mt-5">
+                <div class="flex justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Aproveitamento</span>
+                    <span class="text-xs font-extrabold text-blue-500">71.4%</span>
+                </div>
+                <div class="w-full bg-slate-700/50 rounded-full h-2.5 overflow-hidden">
+                    <div class="bg-blue-500 h-2.5 rounded-full transition-all duration-1000" style="width: 71.42857142857143%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-xl animate-fade-in-up flex flex-col justify-between" style="animation-delay: 950ms;">
+            <div>
+                <h3 class="text-lg font-bold text-slate-100 mb-4">Jd. Umarizal</h3>
+                
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Esperados / Inscritos</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-lg font-bold text-slate-300">10</span>
+                            <span class="text-sm font-semibold text-slate-500">/ 6</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center bg-emerald-900/20 p-3 rounded-lg border border-emerald-900/30">
+                        <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Treinados</span>
+                        <span class="text-xl font-extrabold text-emerald-500">6</span>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-rose-900/20 p-3 rounded-lg border border-rose-900/30">
+                        <span class="text-xs font-semibold text-rose-400 uppercase tracking-wide">AUSENTE</span>
+                        <span class="text-lg font-extrabold text-rose-500">0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de Progresso do Aproveitamento -->
+            <div class="mt-5">
+                <div class="flex justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Aproveitamento</span>
+                    <span class="text-xs font-extrabold text-blue-500">60.0%</span>
+                </div>
+                <div class="w-full bg-slate-700/50 rounded-full h-2.5 overflow-hidden">
+                    <div class="bg-blue-500 h-2.5 rounded-full transition-all duration-1000" style="width: 60.0%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-xl animate-fade-in-up flex flex-col justify-between" style="animation-delay: 1000ms;">
+            <div>
+                <h3 class="text-lg font-bold text-slate-100 mb-4">Jd. Vera Cruz</h3>
+                
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Esperados / Inscritos</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-lg font-bold text-slate-300">6</span>
+                            <span class="text-sm font-semibold text-slate-500">/ 1</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center bg-emerald-900/20 p-3 rounded-lg border border-emerald-900/30">
+                        <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Treinados</span>
+                        <span class="text-xl font-extrabold text-emerald-500">2</span>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-rose-900/20 p-3 rounded-lg border border-rose-900/30">
+                        <span class="text-xs font-semibold text-rose-400 uppercase tracking-wide">AUSENTE</span>
+                        <span class="text-lg font-extrabold text-rose-500">0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de Progresso do Aproveitamento -->
+            <div class="mt-5">
+                <div class="flex justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Aproveitamento</span>
+                    <span class="text-xs font-extrabold text-rose-500">33.3%</span>
+                </div>
+                <div class="w-full bg-slate-700/50 rounded-full h-2.5 overflow-hidden">
+                    <div class="bg-rose-500 h-2.5 rounded-full transition-all duration-1000" style="width: 33.33333333333333%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-xl animate-fade-in-up flex flex-col justify-between" style="animation-delay: 1000ms;">
+            <div>
+                <h3 class="text-lg font-bold text-slate-100 mb-4">Jd. Ângela</h3>
+                
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Esperados / Inscritos</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-lg font-bold text-slate-300">32</span>
+                            <span class="text-sm font-semibold text-slate-500">/ 4</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center bg-emerald-900/20 p-3 rounded-lg border border-emerald-900/30">
+                        <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Treinados</span>
+                        <span class="text-xl font-extrabold text-emerald-500">1</span>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-rose-900/20 p-3 rounded-lg border border-rose-900/30">
+                        <span class="text-xs font-semibold text-rose-400 uppercase tracking-wide">AUSENTE</span>
+                        <span class="text-lg font-extrabold text-rose-500">3</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de Progresso do Aproveitamento -->
+            <div class="mt-5">
+                <div class="flex justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Aproveitamento</span>
+                    <span class="text-xs font-extrabold text-rose-500">3.1%</span>
+                </div>
+                <div class="w-full bg-slate-700/50 rounded-full h-2.5 overflow-hidden">
+                    <div class="bg-rose-500 h-2.5 rounded-full transition-all duration-1000" style="width: 3.125%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-xl animate-fade-in-up flex flex-col justify-between" style="animation-delay: 1000ms;">
+            <div>
+                <h3 class="text-lg font-bold text-slate-100 mb-4">M'Boi Mirim</h3>
+                
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Esperados / Inscritos</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-lg font-bold text-slate-300">12</span>
+                            <span class="text-sm font-semibold text-slate-500">/ 13</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center bg-emerald-900/20 p-3 rounded-lg border border-emerald-900/30">
+                        <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Treinados</span>
+                        <span class="text-xl font-extrabold text-emerald-500">8</span>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-rose-900/20 p-3 rounded-lg border border-rose-900/30">
+                        <span class="text-xs font-semibold text-rose-400 uppercase tracking-wide">AUSENTE</span>
+                        <span class="text-lg font-extrabold text-rose-500">5</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de Progresso do Aproveitamento -->
+            <div class="mt-5">
+                <div class="flex justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Aproveitamento</span>
+                    <span class="text-xs font-extrabold text-blue-500">66.7%</span>
+                </div>
+                <div class="w-full bg-slate-700/50 rounded-full h-2.5 overflow-hidden">
+                    <div class="bg-blue-500 h-2.5 rounded-full transition-all duration-1000" style="width: 66.66666666666666%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-xl animate-fade-in-up flex flex-col justify-between" style="animation-delay: 1000ms;">
+            <div>
+                <h3 class="text-lg font-bold text-slate-100 mb-4">Piraporinha</h3>
+                
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Esperados / Inscritos</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-lg font-bold text-slate-300">22</span>
+                            <span class="text-sm font-semibold text-slate-500">/ 4</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center bg-emerald-900/20 p-3 rounded-lg border border-emerald-900/30">
+                        <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Treinados</span>
+                        <span class="text-xl font-extrabold text-emerald-500">4</span>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-rose-900/20 p-3 rounded-lg border border-rose-900/30">
+                        <span class="text-xs font-semibold text-rose-400 uppercase tracking-wide">AUSENTE</span>
+                        <span class="text-lg font-extrabold text-rose-500">0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de Progresso do Aproveitamento -->
+            <div class="mt-5">
+                <div class="flex justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Aproveitamento</span>
+                    <span class="text-xs font-extrabold text-rose-500">18.2%</span>
+                </div>
+                <div class="w-full bg-slate-700/50 rounded-full h-2.5 overflow-hidden">
+                    <div class="bg-rose-500 h-2.5 rounded-full transition-all duration-1000" style="width: 18.181818181818183%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-xl animate-fade-in-up flex flex-col justify-between" style="animation-delay: 1000ms;">
+            <div>
+                <h3 class="text-lg font-bold text-slate-100 mb-4">Pq. Do Lago</h3>
+                
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Esperados / Inscritos</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-lg font-bold text-slate-300">4</span>
+                            <span class="text-sm font-semibold text-slate-500">/ 0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center bg-emerald-900/20 p-3 rounded-lg border border-emerald-900/30">
+                        <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Treinados</span>
+                        <span class="text-xl font-extrabold text-emerald-500">2</span>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-rose-900/20 p-3 rounded-lg border border-rose-900/30">
+                        <span class="text-xs font-semibold text-rose-400 uppercase tracking-wide">AUSENTE</span>
+                        <span class="text-lg font-extrabold text-rose-500">0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de Progresso do Aproveitamento -->
+            <div class="mt-5">
+                <div class="flex justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Aproveitamento</span>
+                    <span class="text-xs font-extrabold text-blue-500">50.0%</span>
+                </div>
+                <div class="w-full bg-slate-700/50 rounded-full h-2.5 overflow-hidden">
+                    <div class="bg-blue-500 h-2.5 rounded-full transition-all duration-1000" style="width: 50.0%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-xl animate-fade-in-up flex flex-col justify-between" style="animation-delay: 1000ms;">
+            <div>
+                <h3 class="text-lg font-bold text-slate-100 mb-4">Pq. Fernanda</h3>
+                
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Esperados / Inscritos</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-lg font-bold text-slate-300">9</span>
+                            <span class="text-sm font-semibold text-slate-500">/ 7</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center bg-emerald-900/20 p-3 rounded-lg border border-emerald-900/30">
+                        <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Treinados</span>
+                        <span class="text-xl font-extrabold text-emerald-500">5</span>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-rose-900/20 p-3 rounded-lg border border-rose-900/30">
+                        <span class="text-xs font-semibold text-rose-400 uppercase tracking-wide">AUSENTE</span>
+                        <span class="text-lg font-extrabold text-rose-500">2</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de Progresso do Aproveitamento -->
+            <div class="mt-5">
+                <div class="flex justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Aproveitamento</span>
+                    <span class="text-xs font-extrabold text-blue-500">55.6%</span>
+                </div>
+                <div class="w-full bg-slate-700/50 rounded-full h-2.5 overflow-hidden">
+                    <div class="bg-blue-500 h-2.5 rounded-full transition-all duration-1000" style="width: 55.55555555555556%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-xl animate-fade-in-up flex flex-col justify-between" style="animation-delay: 1000ms;">
+            <div>
+                <h3 class="text-lg font-bold text-slate-100 mb-4">Pq. Maria Helena</h3>
+                
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Esperados / Inscritos</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-lg font-bold text-slate-300">14</span>
+                            <span class="text-sm font-semibold text-slate-500">/ 7</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center bg-emerald-900/20 p-3 rounded-lg border border-emerald-900/30">
+                        <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Treinados</span>
+                        <span class="text-xl font-extrabold text-emerald-500">8</span>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-rose-900/20 p-3 rounded-lg border border-rose-900/30">
+                        <span class="text-xs font-semibold text-rose-400 uppercase tracking-wide">AUSENTE</span>
+                        <span class="text-lg font-extrabold text-rose-500">0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de Progresso do Aproveitamento -->
+            <div class="mt-5">
+                <div class="flex justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Aproveitamento</span>
+                    <span class="text-xs font-extrabold text-blue-500">57.1%</span>
+                </div>
+                <div class="w-full bg-slate-700/50 rounded-full h-2.5 overflow-hidden">
+                    <div class="bg-blue-500 h-2.5 rounded-full transition-all duration-1000" style="width: 57.14285714285714%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-xl animate-fade-in-up flex flex-col justify-between" style="animation-delay: 1000ms;">
+            <div>
+                <h3 class="text-lg font-bold text-slate-100 mb-4">Pq. Santo Antônio</h3>
+                
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Esperados / Inscritos</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-lg font-bold text-slate-300">6</span>
+                            <span class="text-sm font-semibold text-slate-500">/ 8</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center bg-emerald-900/20 p-3 rounded-lg border border-emerald-900/30">
+                        <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Treinados</span>
+                        <span class="text-xl font-extrabold text-emerald-500">5</span>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-rose-900/20 p-3 rounded-lg border border-rose-900/30">
+                        <span class="text-xs font-semibold text-rose-400 uppercase tracking-wide">AUSENTE</span>
+                        <span class="text-lg font-extrabold text-rose-500">3</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de Progresso do Aproveitamento -->
+            <div class="mt-5">
+                <div class="flex justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Aproveitamento</span>
+                    <span class="text-xs font-extrabold text-blue-500">83.3%</span>
+                </div>
+                <div class="w-full bg-slate-700/50 rounded-full h-2.5 overflow-hidden">
+                    <div class="bg-blue-500 h-2.5 rounded-full transition-all duration-1000" style="width: 83.33333333333334%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-xl animate-fade-in-up flex flex-col justify-between" style="animation-delay: 1000ms;">
+            <div>
+                <h3 class="text-lg font-bold text-slate-100 mb-4">Riviera Paulista</h3>
+                
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Esperados / Inscritos</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-lg font-bold text-slate-300">11</span>
+                            <span class="text-sm font-semibold text-slate-500">/ 5</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center bg-emerald-900/20 p-3 rounded-lg border border-emerald-900/30">
+                        <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Treinados</span>
+                        <span class="text-xl font-extrabold text-emerald-500">2</span>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-rose-900/20 p-3 rounded-lg border border-rose-900/30">
+                        <span class="text-xs font-semibold text-rose-400 uppercase tracking-wide">AUSENTE</span>
+                        <span class="text-lg font-extrabold text-rose-500">3</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de Progresso do Aproveitamento -->
+            <div class="mt-5">
+                <div class="flex justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Aproveitamento</span>
+                    <span class="text-xs font-extrabold text-rose-500">18.2%</span>
+                </div>
+                <div class="w-full bg-slate-700/50 rounded-full h-2.5 overflow-hidden">
+                    <div class="bg-rose-500 h-2.5 rounded-full transition-all duration-1000" style="width: 18.181818181818183%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-xl animate-fade-in-up flex flex-col justify-between" style="animation-delay: 1000ms;">
+            <div>
+                <h3 class="text-lg font-bold text-slate-100 mb-4">Vila Remo</h3>
+                
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Esperados / Inscritos</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-lg font-bold text-slate-300">5</span>
+                            <span class="text-sm font-semibold text-slate-500">/ 5</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center bg-emerald-900/20 p-3 rounded-lg border border-emerald-900/30">
+                        <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Treinados</span>
+                        <span class="text-xl font-extrabold text-emerald-500">5</span>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-rose-900/20 p-3 rounded-lg border border-rose-900/30">
+                        <span class="text-xs font-semibold text-rose-400 uppercase tracking-wide">AUSENTE</span>
+                        <span class="text-lg font-extrabold text-rose-500">0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de Progresso do Aproveitamento -->
+            <div class="mt-5">
+                <div class="flex justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Aproveitamento</span>
+                    <span class="text-xs font-extrabold text-emerald-500">100.0%</span>
+                </div>
+                <div class="w-full bg-slate-700/50 rounded-full h-2.5 overflow-hidden">
+                    <div class="bg-emerald-500 h-2.5 rounded-full transition-all duration-1000" style="width: 100.0%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-[0_10px_15px_-3px_rgba(0,0,0,0.5)] transform transition-transform duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-xl animate-fade-in-up flex flex-col justify-between" style="animation-delay: 1000ms;">
+            <div>
+                <h3 class="text-lg font-bold text-slate-100 mb-4">Vila Santa Lúcia</h3>
+                
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Esperados / Inscritos</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-lg font-bold text-slate-300">15</span>
+                            <span class="text-sm font-semibold text-slate-500">/ 13</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center bg-emerald-900/20 p-3 rounded-lg border border-emerald-900/30">
+                        <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Treinados</span>
+                        <span class="text-xl font-extrabold text-emerald-500">8</span>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-rose-900/20 p-3 rounded-lg border border-rose-900/30">
+                        <span class="text-xs font-semibold text-rose-400 uppercase tracking-wide">AUSENTE</span>
+                        <span class="text-lg font-extrabold text-rose-500">5</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de Progresso do Aproveitamento -->
+            <div class="mt-5">
+                <div class="flex justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Aproveitamento</span>
+                    <span class="text-xs font-extrabold text-blue-500">53.3%</span>
+                </div>
+                <div class="w-full bg-slate-700/50 rounded-full h-2.5 overflow-hidden">
+                    <div class="bg-blue-500 h-2.5 rounded-full transition-all duration-1000" style="width: 53.333333333333336%"></div>
+                </div>
+            </div>
+        </div>
+        
+            </div>
+        </div>
+
+        <!-- CONTEÚDO DA ABA DE DETALHES (LISTA) -->
+        <div id="view-detalhes" class="hidden animate-fade-in-up pb-12" style="animation-delay: 100ms;">
+            
+            <div class="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-xl mb-6">
+                <label for="congregation-select" class="block text-sm font-bold text-slate-400 mb-2 uppercase tracking-wider">Filtre por Casa de Oração:</label>
+                <select id="congregation-select" class="w-full md:w-1/3 bg-slate-900 border border-slate-600 text-slate-100 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-3 shadow-inner cursor-pointer" onchange="renderDetails()">
+                    <option value="">-- Selecione uma opção --</option>
+                    <!-- Opções injetadas via JS -->
+                </select>
+            </div>
+
+            <!-- Alterado para suportar as 3 tabelas na mesma linha em monitores grandes -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="tables-container">
+                
+                <!-- Tabela Previstos -->
+                <div class="bg-slate-800 rounded-2xl border border-slate-700 shadow-xl overflow-hidden flex flex-col h-[600px]">
+                    <div class="p-6 border-b border-slate-700 bg-slate-800/80 backdrop-blur shrink-0">
+                        <h3 class="text-xl font-bold text-slate-200 flex items-center gap-3">
+                            <div class="w-3 h-3 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.8)]"></div> 
+                            Previstos (<span id="count-esp" class="text-blue-400">0</span>)
+                        </h3>
+                    </div>
+                    <div class="overflow-y-auto grow p-0">
+                        <table class="w-full text-sm text-left text-slate-300">
+                            <thead class="text-xs text-slate-400 uppercase bg-slate-900/90 sticky top-0 z-10 backdrop-blur border-b border-slate-700">
+                                <tr>
+                                    <th scope="col" class="px-6 py-4">Nome</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-esp" class="divide-y divide-slate-700/50">
+                                <tr><td class="px-6 py-8 text-center text-slate-500 italic">Selecione uma Congregação</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Tabela Inscritos -->
+                <div class="bg-slate-800 rounded-2xl border border-slate-700 shadow-xl overflow-hidden flex flex-col h-[600px]">
+                    <div class="p-6 border-b border-slate-700 bg-slate-800/80 backdrop-blur shrink-0">
+                        <h3 class="text-xl font-bold text-slate-200 flex items-center gap-3">
+                            <div class="w-3 h-3 rounded-full bg-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.8)]"></div> 
+                            Inscritos (<span id="count-insc" class="text-indigo-400">0</span>)
+                        </h3>
+                    </div>
+                    <div class="overflow-y-auto grow p-0">
+                        <table class="w-full text-sm text-left text-slate-300">
+                            <thead class="text-xs text-slate-400 uppercase bg-slate-900/90 sticky top-0 z-10 backdrop-blur border-b border-slate-700">
+                                <tr>
+                                    <th scope="col" class="px-6 py-4">Nome</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-insc" class="divide-y divide-slate-700/50">
+                                <tr><td class="px-6 py-8 text-center text-slate-500 italic">Selecione uma Congregação</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Tabela Realizado -->
+                <div class="bg-slate-800 rounded-2xl border border-slate-700 shadow-xl overflow-hidden flex flex-col h-[600px]">
+                    <div class="p-6 border-b border-slate-700 bg-slate-800/80 backdrop-blur shrink-0">
+                        <h3 class="text-xl font-bold text-slate-200 flex items-center gap-3">
+                            <div class="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.8)]"></div> 
+                            Treinados (<span id="count-real" class="text-emerald-400">0</span>)
+                        </h3>
+                    </div>
+                    <div class="overflow-y-auto grow p-0">
+                        <table class="w-full text-sm text-left text-slate-300">
+                            <thead class="text-xs text-slate-400 uppercase bg-slate-900/90 sticky top-0 z-10 backdrop-blur border-b border-slate-700">
+                                <tr>
+                                    <th scope="col" class="px-6 py-4">Nome</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-real" class="divide-y divide-slate-700/50">
+                                <tr><td class="px-6 py-8 text-center text-slate-500 italic">Selecione uma Congregação</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            
+        </div>
+
+    </div>
+
+    <!-- Script de Dados e Lógica de Abas -->
+    <script>
+        // Dados injetados pelo Python
+        const dataDetalhes = {"Cidade Ipava": {"esperados": [{"Nome": "Alex Dos Santos Matias", "Funcao": "-"}, {"Nome": "Amaury De Oliveira Dos Santos ", "Funcao": "Manutenção Preventiva "}, {"Nome": "Edson Soares Cavalcante ", "Funcao": "Manutenção Preventiva "}, {"Nome": "Francisco Ricardo Gomes", "Funcao": "Enc. De Manutenção"}, {"Nome": "Gismar Alves Tigre ", "Funcao": "Encarregado Da Manutenção. "}, {"Nome": "Izelino Rodrigues Da Silva", "Funcao": "-"}, {"Nome": "José Adenir De Almeida", "Funcao": "Monitor De Segurança"}, {"Nome": "Luiz Severo Sobrinho ", "Funcao": "Manutenção Preventiva "}, {"Nome": "Ricardo Firmino ", "Funcao": "Manutenção Preventiva "}, {"Nome": "Rodolfo Felipe Santana Marques ", "Funcao": "Encarregado Da Manutenção "}, {"Nome": "Valdir Gomes De Almeida", "Funcao": "Ajudante Geral"}], "inscritos": [{"Nome": "Gismar Alves Tigre ", "Funcao": "Encarregado De Manutenção "}, {"Nome": "Francisco Ricardo Gomes ", "Funcao": "Encarregado De Manutenção "}, {"Nome": "Walter Marcolino Da Silva", "Funcao": "Tst"}, {"Nome": "Severino Roberto De Oliveira ", "Funcao": "Mestre De Obra "}, {"Nome": "Rodolfo Felipe Santana Marques Bezerra ", "Funcao": "Encarregado Manutenção "}, {"Nome": "Jose Adenir De Almeida ", "Funcao": "Eletricista "}], "realizados": [{"Nome": "Francisco Ricardo Gomes ", "Funcao": "Presente"}, {"Nome": "Gismar Alves Tigre ", "Funcao": "Presente"}, {"Nome": "Izelino Rodrigues Da Silva ", "Funcao": "Presente"}, {"Nome": "Jose Adenir De Almeida ", "Funcao": "Presente"}, {"Nome": "Rodolfo Felipe Santana Marques Bezerra ", "Funcao": "Presente"}, {"Nome": "Severino Roberto De Oliveira ", "Funcao": "Presente"}, {"Nome": "Walter Marcolino Da Silva", "Funcao": "Presente"}]}, "Jd. Amália": {"esperados": [{"Nome": "Antônio Cesar Nascimento Costa", "Funcao": "Eletricista "}, {"Nome": "Derval Vieira Duarte", "Funcao": "Enc. De Manutenção"}, {"Nome": "Joel Ribeiro ", "Funcao": "Encarregado De Manutenção "}, {"Nome": "José Henrique De Oliveira ", "Funcao": "Auxiliar De Manutenção "}, {"Nome": "Milton Sérgio Da Silva ", "Funcao": "Eletricista "}, {"Nome": "Pedro De Sales Pereira ", "Funcao": "Auxiliar Manutenção "}, {"Nome": "Pedro Manoel Do Nascimento ", "Funcao": "Auxiliar De Manutenção "}, {"Nome": "Renato Faustino De Andrade ", "Funcao": "Auxiliar De Manutenção "}], "inscritos": [{"Nome": "Milton Sérgio Da Silva ", "Funcao": "Elétrica "}, {"Nome": "Derval Vieira Duarte ", "Funcao": "Encarregado Manutenção "}], "realizados": [{"Nome": "Derval Vieira Duarte ", "Funcao": "Presente"}, {"Nome": "Milton Sérgio Da Silva ", "Funcao": "Presente"}, {"Nome": "Pedro De Sales Pereira", "Funcao": "Presente"}]}, "Jd. Aracati": {"esperados": [{"Nome": "Adair Jose Costa", "Funcao": "Manutenção"}, {"Nome": "Erivelton Jose Da Silva", "Funcao": "Manutenção"}, {"Nome": "Jose Luiz Carvalho Da Silva", "Funcao": "Manutenção"}], "inscritos": [{"Nome": "Adair José Costa ", "Funcao": "Manutenção "}], "realizados": [{"Nome": "Adair José Costa ", "Funcao": "Presente"}]}, "Jd. Capão Redondo": {"esperados": [{"Nome": "Adier Luiz De Sousa", "Funcao": "Colaborador Manutenção Preventiva"}, {"Nome": "Aílton Ferreira Bernardo", "Funcao": "Colaborador Manutenção Preventiva"}, {"Nome": "Carlos Henrique Novais Silva", "Funcao": "Ajudante Geral"}, {"Nome": "Daniel Lucelio Oliveira Xisto", "Funcao": "Colaborador Manutenção Preventiva"}, {"Nome": "Edmar Alves De Araujo", "Funcao": "Colaborador De Manutenção Preventiva"}, {"Nome": "Francisco Carlos De Souza", "Funcao": "Colaborador Manutenção Preventiva"}, {"Nome": "Jairo Jose Pereira", "Funcao": "Colaborador Manutenção Preventiva"}, {"Nome": "José Alves Feitosa Filho", "Funcao": "Colaborador Manutenção Preventiva"}, {"Nome": "Marlei Da Silva Louzada", "Funcao": "Enc. De Manutenção"}, {"Nome": "Osvaldo Refundini", "Funcao": "Colaborador Manutenção Preventiva"}, {"Nome": "Paulo Da Conceição Andrade", "Funcao": "Pintor"}, {"Nome": "Paulo Lopes Gomes", "Funcao": "Colaborador Manutenção Preventiva"}, {"Nome": "Sebastião Candido De Assis", "Funcao": "Colaborador Manutenção Preventiva"}, {"Nome": "Thiago Souza Bezerra", "Funcao": "Colaborador Manutenção Preventiva"}, {"Nome": "Ulisses De Souza Pereira", "Funcao": "Eletricista"}, {"Nome": "Valdeci José Coimbra", "Funcao": "Pintor"}, {"Nome": "Wemerson Julio Lima De Freitas", "Funcao": "Colaborador Manutenção Preventiva"}], "inscritos": [{"Nome": "Adier Luis De Souza", "Funcao": "Trabalho Em Altura"}, {"Nome": "Daniel Xisto", "Funcao": "Monitor De Segurança"}, {"Nome": "José Alves Feitoza Filho ", "Funcao": "Eletricista "}, {"Nome": "Marco Antônio Da Silva", "Funcao": "Ajudante Geral"}, {"Nome": "Paulo Da Conceicao Andrade ", "Funcao": "Pintor "}, {"Nome": "Paulo Lopes Gomes ", "Funcao": "Eletricista "}, {"Nome": "Wemerson Junio Lima De Freitas ", "Funcao": "Trabalho Em Altura"}, {"Nome": "Francisco Carlos De Souza", "Funcao": "Enc. Manutenção "}, {"Nome": "Marcelo Almeida Do Nascimento ", "Funcao": "Soldador "}, {"Nome": "Fernando De Souza", "Funcao": "Pedreiro"}, {"Nome": "Ulisses De Souza Pereira ", "Funcao": "Eletricista "}], "realizados": [{"Nome": "Adier Luis De Souza", "Funcao": "Presente"}, {"Nome": "Daniel Xisto", "Funcao": "Presente"}, {"Nome": "Fernando De Souza", "Funcao": "Presente"}, {"Nome": "Francisco Carlos De Souza", "Funcao": "Presente"}, {"Nome": "José Alves Feitoza Filho ", "Funcao": "Presente"}, {"Nome": "Marcelo Almeida Do Nascimento ", "Funcao": "Presente"}, {"Nome": "Paulo Da Conceicao Andrade ", "Funcao": "Presente"}, {"Nome": "Ulisses De Souza Pereira ", "Funcao": "Presente"}, {"Nome": "Wemerson Junio Lima De Freitas ", "Funcao": "Presente"}]}, "Jd. Célia": {"esperados": [{"Nome": "Carlos Pereira Da Silva", "Funcao": "Monitor De Segurança"}, {"Nome": "Davi Mendes Costa ", "Funcao": "Ajudante "}, {"Nome": "Diego Messias Barros Melo", "Funcao": "Ajudante "}, {"Nome": "Jurandir De Jesus Santos ", "Funcao": "Ajudante "}, {"Nome": "Marcelo Bezerra De Lima", "Funcao": "Monitor De Segurança"}, {"Nome": "Nelson Texeira Da Cunha ", "Funcao": "Ajudante "}, {"Nome": "Thiago Carrinho Paiva ", "Funcao": "Pintor"}], "inscritos": [{"Nome": "Diego Messias Barros Melo ", "Funcao": "Ajudante Geral E Monitor "}, {"Nome": "Jurandi De Jesus Santos ", "Funcao": "Ajudante De Manutenção "}, {"Nome": "Nelson Teixeira Da Cunha ", "Funcao": "Auxiliar Manutenção "}, {"Nome": "Marcelo Bezerra De Lima ", "Funcao": "Encarregado De Manutenção "}], "realizados": [{"Nome": "Davi Mendes Costa", "Funcao": "Presente"}, {"Nome": "Jurandi De Jesus Santos ", "Funcao": "Presente"}, {"Nome": "Marcelo Bezerra De Lima ", "Funcao": "Presente"}, {"Nome": "Nelson Teixeira Da Cunha ", "Funcao": "Presente"}]}, "Jd. Das Flores": {"esperados": [{"Nome": "Agnaldo Martins", "Funcao": "Porteiro / Manutenção "}, {"Nome": "Ancelmo De Souza Rodrigues", "Funcao": "Manutenção "}, {"Nome": "Carlos Alberto Farias", "Funcao": "Porteiro / Manutenção "}, {"Nome": "Cristiano Marques Da Costa", "Funcao": "Manutenção "}, {"Nome": "Gustavo De Sousa Martins", "Funcao": "Manutenção"}, {"Nome": "Ivonilo Esteves Gomes ", "Funcao": "Encarregado De Manutenção "}, {"Nome": "Jonatas De Christo Siqueira Dos Santos ", "Funcao": "Encarregado Da Manutenção "}, {"Nome": "José Lourenço Dos Santos Filho ", "Funcao": "Monitor De Segurança "}, {"Nome": "Marcio Vital Da Silva", "Funcao": "Manutenção/Porteiro/Auxiliar Da Escrita"}, {"Nome": "Raimundo Ailton Da Silva Vieira ", "Funcao": "Voluntario"}], "inscritos": [{"Nome": "Ida Oliveira Lima Dos Santos", "Funcao": "Monitora De Segurança"}, {"Nome": "Agnaldo Martins ", "Funcao": "Porteiro"}, {"Nome": "Ivonilo Esteves Gomes ", "Funcao": "Enc De Manutenção J"}, {"Nome": "Ancelmo De Souza Rodrigues", "Funcao": "Músico/ Manutenção "}, {"Nome": "Jonatas De Christo Siqueira Dos Santos ", "Funcao": "Encarregado De Manutenção/Auxiliar Da Escrita"}, {"Nome": "Flávio Henrique De Souza ", "Funcao": "Encarregado De Orquestra"}, {"Nome": "Gustavo De Sousa Martins", "Funcao": "Auxiliar De Jovens"}, {"Nome": "Janiel Silva Souza", "Funcao": "Som / Manutenção "}, {"Nome": "Jonnes Ramos Da Cruz", "Funcao": "Auxiliar Da Escrita"}, {"Nome": "Carlos Alberto Farias ", "Funcao": "Porteiro / Manutenção "}, {"Nome": "Raimundo Ailton Da Silva Vieira", "Funcao": "Voluntario"}, {"Nome": "Danilo Barberino Da Silva ", "Funcao": "Nao Tenho"}, {"Nome": "Cristiano Marques Da Costa", "Funcao": "Manutenção "}, {"Nome": "Ederson Pereira Moura Silva ", "Funcao": "Ajudante/"}, {"Nome": "Marcio Vital Da Silva", "Funcao": "Porteiro/Escrita/ Manutenção "}], "realizados": [{"Nome": "Agnaldo Martins ", "Funcao": "Presente"}, {"Nome": "Ancelmo De Souza Rodrigues", "Funcao": "Presente"}, {"Nome": "Carlos Alberto Farias ", "Funcao": "Presente"}, {"Nome": "Gustavo De Sousa Martins", "Funcao": "Presente"}, {"Nome": "Ida Oliveira Lima Dos Santos", "Funcao": "Presente"}, {"Nome": "Ivonilo Esteves Gomes ", "Funcao": "Presente"}, {"Nome": "Jonatas De Christo Siqueira Dos Santos ", "Funcao": "Presente"}, {"Nome": "Jonnes Ramos Da Cruz", "Funcao": "Presente"}, {"Nome": "Marcio Vital Da Silva", "Funcao": "Presente"}, {"Nome": "Raimundo Ailton Da Silva Vieira", "Funcao": "Presente"}]}, "Jd. Das Palmas": {"esperados": [{"Nome": "Alex Sandro Santos De Souza", "Funcao": "Ajudante Geral"}, {"Nome": "Antonio Marcos Carvalho Das Virgens", "Funcao": "Monitor De Segurança"}, {"Nome": "Claudio Da Silva Alves", "Funcao": "-"}, {"Nome": "Eliseu De Almeida Pinheiro", "Funcao": "Ajudante Geral"}, {"Nome": "Ismael Dos Santos Costa", "Funcao": "-"}, {"Nome": "Osvaldo Tiburcio Caetano", "Funcao": "Monitor De Segurança"}, {"Nome": "Rodrigo Viana Angelo", "Funcao": "Monitor De Segurança"}], "inscritos": [{"Nome": "Rodrigo Viana Angelo", "Funcao": "Escrita / Voluntário De Manutenção"}, {"Nome": "Antonio Marcos Carvalho Das Virgens ", "Funcao": "Monitor De Segurança "}, {"Nome": "Alex Sandro Santos De Souza ", "Funcao": "Ajudante Geral "}, {"Nome": "Claudio Da Silva Alves ", "Funcao": "Manutenção "}, {"Nome": "Osvaldo Tiburcio Caetano", "Funcao": "Coordenador Voluntario"}, {"Nome": "Marcelo Jose Cruz ", "Funcao": "Músico "}, {"Nome": "Josivan Ferreira Da Silva", "Funcao": "Voluntário De Manutenção"}], "realizados": [{"Nome": "Alex Sandro Santos De Souza ", "Funcao": "Presente"}, {"Nome": "Antonio Marcos Carvalho Das Virgens ", "Funcao": "Presente"}, {"Nome": "Claudio Da Silva Alves ", "Funcao": "Presente"}, {"Nome": "Josivan Ferreira Da Silva", "Funcao": "Presente"}, {"Nome": "Marcelo Jose Cruz ", "Funcao": "Presente"}, {"Nome": "Osvaldo Tiburcio Caetano", "Funcao": "Presente"}, {"Nome": "Rodrigo Viana Angelo", "Funcao": "Presente"}]}, "Jd. Guarujá": {"esperados": [{"Nome": "Adaias Araujo Martins", "Funcao": "Auxiliar De Manutenção"}, {"Nome": "Adriano Da Silva Ferreira", "Funcao": "Eletricista"}, {"Nome": "Alan Maciel Da Silva", "Funcao": "Auxiliar De Manutenção"}, {"Nome": "Antonio Joaquim Da Silva", "Funcao": "Auxiliar De Manutenção"}, {"Nome": "Arlindo Rodrigues Gonçalves", "Funcao": "Auxiliar De Manutenção"}, {"Nome": "Danilo Xavier De Jesus", "Funcao": "Auxiliar De Manutenção"}, {"Nome": "Edson Da Silva Araujo", "Funcao": "Pintor"}, {"Nome": "Geraldo Silva Araujo", "Funcao": "Pintor"}, {"Nome": "Heder Alves De Oliveira", "Funcao": "Auxiliar De Manutenção"}, {"Nome": "Isaias Adail Pimenta", "Funcao": "Auxiliar De Manutenção"}, {"Nome": "Israel Oliveira Freitas", "Funcao": "Auxiliar De Manutenção"}, {"Nome": "Izaqueu Pereira De Sousa", "Funcao": "Auxiliar De Manutenção"}, {"Nome": "Joneis Satil", "Funcao": "Auxiliar De Manutenção"}, {"Nome": "José Augusto De Lima Cavalcanti", "Funcao": "Eletricista"}, {"Nome": "José Edinaldo Costa", "Funcao": "Auxiliar De Manutenção"}, {"Nome": "Jose Mario Araujo Da Silva", "Funcao": "Pedreiro / Auxiliar De Manutenção"}, {"Nome": "Luiz Ferreira Veras", "Funcao": "Marceneiro"}, {"Nome": "Luiz Gonzaga Pereira", "Funcao": "Auxiliar De Manutenção"}, {"Nome": "Paulo Pereira De Souza", "Funcao": "Auxiliar De Manutenção"}, {"Nome": "Ronie Silva Pereira", "Funcao": "Pintor"}, {"Nome": "Samuel Francisco Dos Santos", "Funcao": "-"}, {"Nome": "Sebastião Rigo Filho", "Funcao": "Encarregado De Manutenção"}, {"Nome": "Veranilson Inacio Cabral", "Funcao": "Encarregado Da Manutenção"}], "inscritos": [{"Nome": "Danilo Xavier De Jesus ", "Funcao": "Monitor De Segurança "}, {"Nome": "Carlos Eduardo Ramos", "Funcao": "Monitor De Segurança/ Garagem"}, {"Nome": "Antônio Joaquim Da Silva ", "Funcao": "Monitor De Segurança "}, {"Nome": "Antônio Joaquim Da Silva", "Funcao": "Monitor De Segurança/Garagem"}, {"Nome": "Guilherme Brunholi Rodrigues Dos Santos", "Funcao": "Auxiliar De Escrita"}, {"Nome": "Ronie Silva Pereira ", "Funcao": "Porteiro/Pintor"}, {"Nome": "Joneis Satil ", "Funcao": "Porteiro "}, {"Nome": "José Augusto De Lima Cavalcanti ", "Funcao": "Eletricista "}, {"Nome": "Veranilson Inácio Cabral ", "Funcao": "Encarregado De Manutenção "}, {"Nome": "Alan Maciel Da Silva ", "Funcao": "Músico "}, {"Nome": "Alexandre Oliveira Lima ", "Funcao": "Ajudante "}, {"Nome": "Jose Mário Araújo Da Silva ", "Funcao": "Da Manutenção E Do Som "}, {"Nome": "Milton Alves Dos Santos Filho ", "Funcao": "Lavo As Caixas De Agua Da Ccb Jardim Guaruja"}, {"Nome": "Adaias Araújo Martins", "Funcao": "Cooperador Oficial/Auxiliar Da Manutenção "}, {"Nome": "Geraldo Silva Araújo ", "Funcao": "Pintor"}], "realizados": [{"Nome": "Alan Maciel Da Silva ", "Funcao": "Presente"}, {"Nome": "Alexandre Oliveira Lima ", "Funcao": "Presente"}, {"Nome": "Antônio Joaquim Da Silva ", "Funcao": "Presente"}, {"Nome": "Carlos Eduardo Ramos", "Funcao": "Presente"}, {"Nome": "Danilo Xavier De Jesus ", "Funcao": "Presente"}, {"Nome": "Geraldo Silva Araújo ", "Funcao": "Presente"}, {"Nome": "Joneis Satil ", "Funcao": "Presente"}, {"Nome": "José Augusto De Lima Cavalcanti ", "Funcao": "Presente"}, {"Nome": "Jose Mário Araújo Da Silva ", "Funcao": "Presente"}, {"Nome": "Milton Alves Dos Santos Filho ", "Funcao": "Presente"}, {"Nome": "Ronie Silva Pereira ", "Funcao": "Presente"}, {"Nome": "Veranilson Inácio Cabral ", "Funcao": "Presente"}]}, "Jd. Ibirapuera": {"esperados": [{"Nome": "Adalaberto Gentil", "Funcao": "Ajudante Geral (Manutenção)"}, {"Nome": "Adriano Abrantes De Andrade", "Funcao": "Ajudante Geral (Manutenção)"}, {"Nome": "Agemiro Alves De Souza", "Funcao": "Ajudante Geral (Manutenção)"}, {"Nome": "Amilton Dos Santos Reis", "Funcao": "Ajudante Geral (Manutenção)"}, {"Nome": "Carlos Roberto Vitor", "Funcao": "Ajudante Geral (Manutenção)"}, {"Nome": "Daniel Valdivino De Sousa", "Funcao": "Enc. De Manutenção"}, {"Nome": "Erenildo Rocha", "Funcao": "Ajudante Geral (Manutenção)"}, {"Nome": "Fabio Barbosa De Britto", "Funcao": "Ajudante Geral (Manutenção)"}, {"Nome": "Fabio Geraldo Paixão", "Funcao": "Ajudante Geral (Manutenção)"}, {"Nome": "Gabriel Jose Gonçalves Da Silva", "Funcao": "Ajudante Geral (Manutenção)"}, {"Nome": "Gerson Neves Do Nascimento", "Funcao": "Colaborador Manuteção/Preventiva"}, {"Nome": "Joel Rodrigues Da Silva", "Funcao": "Ajudante Geral (Manutenção)"}, {"Nome": "Joel Santos Do Nascimento", "Funcao": "Ajudante Geral"}, {"Nome": "Jorge Alberto Da Silva", "Funcao": "Ajudante Geral (Manutenção)"}, {"Nome": "Jose Roberto De Jesus Assis", "Funcao": "Ajudante Geral (Manutenção)"}, {"Nome": "José Valdemiro De Sousa", "Funcao": "Ajudante Geral"}, {"Nome": "Juvenal Almeida Barros", "Funcao": "Ajudante Geral (Manutenção)"}, {"Nome": "Luiz Carlos Dias", "Funcao": "Ajudante Geral "}, {"Nome": "Marcos Gavioli Junior", "Funcao": "Ajudante Geral (Manutenção)"}, {"Nome": "Melky Gomes Dos Santos", "Funcao": "-"}, {"Nome": "Pedro Da Purificação Santos", "Funcao": "Encarregado De Manutenção"}, {"Nome": "Rafael Araujo Pereira", "Funcao": "Ajudante Geral (Manutenção)"}, {"Nome": "Rodrigo Nogueira Moura", "Funcao": "Engenheiro Civil"}, {"Nome": "Salatiel Nogueira", "Funcao": "Ajudante Geral (Manutenção)"}, {"Nome": "Samuel Barbosa De Britto", "Funcao": "Ajudante Geral (Manutenção)"}, {"Nome": "Vinicius Marcelino De Souza", "Funcao": "Ajudante Geral (Manutenção)"}, {"Nome": "Zacarias Dos Anjos Filho", "Funcao": "Encarregado De Manutenção"}], "inscritos": [{"Nome": "Salatiel Nogueira", "Funcao": "Monitor Segurança "}, {"Nome": "Pedro Da Purificação Santos ", "Funcao": "Encarregado De Manutenção "}, {"Nome": "Gerson Neves Do Nascimento ", "Funcao": "Auxiliar Da Manutenção "}, {"Nome": "Joel Santos Do Nascimento ", "Funcao": "Auxiliar De Manutenção "}, {"Nome": "José Roberto De Jesus Assis ", "Funcao": "Armador Dê Estrutura De Croceto "}, {"Nome": "José Roberto De Jesus Assis", "Funcao": "Ajudante "}, {"Nome": "Daniel Valdivino De Sousa ", "Funcao": "Encarregado Manutenção "}, {"Nome": "Zacarias Dos Anjos Filho", "Funcao": "Encarregado Manutenção "}], "realizados": [{"Nome": "Daniel Valdivino De Sousa ", "Funcao": "Presente"}, {"Nome": "Gerson Neves Do Nascimento ", "Funcao": "Presente"}, {"Nome": "Joel Santos Do Nascimento ", "Funcao": "Presente"}, {"Nome": "José Roberto De Jesus Assis", "Funcao": "Presente"}, {"Nome": "Pedro Da Purificação Santos ", "Funcao": "Presente"}, {"Nome": "Salatiel Nogueira", "Funcao": "Presente"}, {"Nome": "Zacarias Dos Anjos Filho", "Funcao": "Presente"}]}, "Jd. Ingá": {"esperados": [{"Nome": "Antonio Santana Dos Santos", "Funcao": "-"}, {"Nome": "Aparecido Andrade Passos ", "Funcao": "Serviços Gerais "}, {"Nome": "Eneas Fernandes Firmino", "Funcao": "Gestão De Manutenção"}, {"Nome": "Francisco Das Chagas Avila De Oliveira ", "Funcao": "Porteiro "}, {"Nome": "Gustavo Martins Da Cruz Firmino", "Funcao": "-"}, {"Nome": "Hulderval Ferreira Da Silva", "Funcao": "Ajudante Geral"}, {"Nome": "João Porto", "Funcao": "Ajudante Geral"}, {"Nome": "Neydson Syllas De Matos Pedroso", "Funcao": "-"}, {"Nome": "Reginaldo Ferreira Guerra", "Funcao": "-"}, {"Nome": "Sidnei Pedroso", "Funcao": "Monitor De Segurança"}, {"Nome": "Vitor Hugo Dos Santos Souza", "Funcao": "Ajudante Geral"}], "inscritos": [{"Nome": "Sidnei Pedroso ", "Funcao": "Encarregado De Manutenção "}], "realizados": [{"Nome": "Aparecido Andrade Passos", "Funcao": "Presente"}, {"Nome": "João Porto", "Funcao": "Presente"}, {"Nome": "Sidnei Pedroso ", "Funcao": "Presente"}]}, "Jd. Leônidas Moreira": {"esperados": [{"Nome": "Alex Sandro Caetano Almeida ", "Funcao": "Coord. De Manutenção"}, {"Nome": "Antônio Francisco Da Conceição", "Funcao": "Manutenção Preventiva"}, {"Nome": "Guilherme Mota Melo", "Funcao": "Ajudante "}, {"Nome": "Henrique Pereira De Araújo ", "Funcao": "Ajudante "}, {"Nome": "João Neres Da Silva", "Funcao": "Monitor De Segurança"}, {"Nome": "José Pereira De Souza", "Funcao": "Ajudante Geral"}, {"Nome": "José. Pio De Souza ", "Funcao": "Eletricista "}, {"Nome": "Manoel Do Carmo De Santana ", "Funcao": "Ajudante "}, {"Nome": "Manoel Pereira Rodrigues ", "Funcao": "Pedreiro "}, {"Nome": "Mateus Mendes Ferreira ", "Funcao": "Ajudante "}, {"Nome": "Maurício Capelli", "Funcao": "Pintor"}, {"Nome": "Rafael Araujo Viana Soares", "Funcao": "Ajudante Geral"}, {"Nome": "Raymundo Avelino De Santana", "Funcao": "Colaborador Responsável Da Atividade De Manutenção Preventiva"}, {"Nome": "Rian Pereira De Carvalho", "Funcao": "Ajudante Geral"}, {"Nome": "Rodrigo Rossi Santos", "Funcao": "Ajudante Geral"}, {"Nome": "Sebastião Gomes De Sá ", "Funcao": "Ajudante "}, {"Nome": "Sergio Takashi Kikuchi", "Funcao": "Colaborador Manutenção Preventiva"}, {"Nome": "Valdenor Pereira Dos Santos", "Funcao": "Responsável Da Atividade Da Manutenção Preventiva"}, {"Nome": "Vitor Toshio De Souza Kikuchi", "Funcao": "Ajudante "}, {"Nome": "Wesley Pereira Do Carmo", "Funcao": "Ajudante "}], "inscritos": [{"Nome": "Mauricio Capelli", "Funcao": "Pintor"}, {"Nome": "João Neres Da Silva ", "Funcao": "Pedreiro "}, {"Nome": "Valdenor Pereira Dos Santos ", "Funcao": "Encarregado De Manutenção "}, {"Nome": "Valdenor Pereira Dos Santos", "Funcao": "Encarregado De Manutenção"}, {"Nome": "Mateus Mendes Ferreira ", "Funcao": "Voluntário"}, {"Nome": "Wesley Pereira Do Carmo", "Funcao": "Voluntário"}, {"Nome": "Sérgio Takashi Kikuchi", "Funcao": "Auxiliar Manutenção"}, {"Nome": "Henrique Pereira De Araújo", "Funcao": "Voluntário"}, {"Nome": "Vítor Toshio Sousa Kikuchi", "Funcao": "Voluntário"}, {"Nome": "Rodrigo Rossi Santos ", "Funcao": "Voluntário "}, {"Nome": "Alex Sandro Caetano Almeida", "Funcao": "Coordenador De Manutenção 8.1"}, {"Nome": "Sergio Takashi Kikuchi", "Funcao": "Voluntário"}, {"Nome": "Manoel Pereira", "Funcao": "Mestre De Obra"}, {"Nome": "José Pio De Souza", "Funcao": "Eletrecista"}, {"Nome": "Manuel Pereira", "Funcao": "Pedreiro"}, {"Nome": "Rafael Araujo Viana Soares ", "Funcao": "Voluntário "}, {"Nome": "Sebastião Gomes De Sá ", "Funcao": "Ajudante Geral"}, {"Nome": "Guilherme Mota Melo", "Funcao": "Voluntário"}, {"Nome": "Rian Pereira De Carvalho ", "Funcao": "Voluntário "}, {"Nome": "Edvaldo Gonçalves Da Silva ", "Funcao": "Ajudante De Obras"}], "realizados": [{"Nome": "Antônio Francisco Da Conceição", "Funcao": "Presente"}, {"Nome": "Guilherme Mota Melo", "Funcao": "Presente"}, {"Nome": "Henrique Pereira De Araújo", "Funcao": "Presente"}, {"Nome": "João Neres Da Silva ", "Funcao": "Presente"}, {"Nome": "José Pio De Souza", "Funcao": "Presente"}, {"Nome": "Manoel Pereira", "Funcao": "Presente"}, {"Nome": "Mateus Mendes Ferreira ", "Funcao": "Presente"}, {"Nome": "Mauricio Capelli", "Funcao": "Presente"}, {"Nome": "Rafael Araujo Viana Soares ", "Funcao": "Presente"}, {"Nome": "Rodrigo Rossi Santos ", "Funcao": "Presente"}, {"Nome": "Sérgio Takashi Kikuchi", "Funcao": "Presente"}, {"Nome": "Valdenor Pereira Dos Santos ", "Funcao": "Presente"}, {"Nome": "Vitor Toshio Sousa Kikuchi", "Funcao": "Presente"}, {"Nome": "Wesley Pereira Do Carmo", "Funcao": "Presente"}]}, "Jd. Lídia": {"esperados": [{"Nome": "Anderson Rodrigues De Sousa", "Funcao": "Monitor De Segurança"}, {"Nome": "Douglas Vicente Da Silva", "Funcao": "-"}, {"Nome": "Ivanildo Lourenço Cezar", "Funcao": "Monitor De Segurança"}, {"Nome": "Jucival Barbosa Dos Santos", "Funcao": "Coord. De Manutenção"}, {"Nome": "Sérgio Lourenço César", "Funcao": "-"}, {"Nome": "Sérgio Sobral De Almeida", "Funcao": "Monitor De Segurança"}, {"Nome": "Vagner Benedito Almeida", "Funcao": "Ajudante Geral"}], "inscritos": [{"Nome": "Anderson Rodrigues De Sousa", "Funcao": "Monitor De Segurança"}, {"Nome": "Anderson Rodrigues De Sousa ", "Funcao": "Monitor De Segurança "}, {"Nome": "Atilas Silva Pereira", "Funcao": "Pedreiro"}, {"Nome": "Cicero Dos Passos Ferreira ", "Funcao": "Manutenção "}, {"Nome": "Sergio Lourenço Cezar", "Funcao": "Eletricista"}, {"Nome": "Atilas Silva Pereira ", "Funcao": "Pedreiro"}, {"Nome": "Ivanildo Lourenço Cezar ", "Funcao": "Pintor"}, {"Nome": "Nelson Teixeira De Macedo", "Funcao": "Ajudante"}, {"Nome": "Silsio Raul De Almeida", "Funcao": "Manutenção Civil E Manutenção Eletrica"}, {"Nome": "Vagner Benedito Almeida", "Funcao": "Manutencao"}], "realizados": [{"Nome": "Anderson Rodrigues De Sousa ", "Funcao": "Presente"}, {"Nome": "Atilas Silva Pereira", "Funcao": "Presente"}, {"Nome": "Cicero Dos Passos Ferreira ", "Funcao": "Presente"}, {"Nome": "David Francisco Cardoso", "Funcao": "Presente"}, {"Nome": "Ivanildo Lourenço Cezar ", "Funcao": "Presente"}, {"Nome": "Nelson Teixeira De Macedo", "Funcao": "Presente"}, {"Nome": "Silsio Raul De Almeida", "Funcao": "Presente"}]}, "Jd. Nakamura": {"esperados": [{"Nome": "Aldo Pinto Da Silva", "Funcao": "Aux Manutenção "}, {"Nome": "Antonio De Sousa Neto", "Funcao": "Aux De Manutenção "}, {"Nome": "Fernando Oliveira Da Silva", "Funcao": "-"}, {"Nome": "Francisco Carvalho ", "Funcao": "Aux De Manutenção "}, {"Nome": "Gerson Marlon Freschi", "Funcao": "Aux De Manutenção "}, {"Nome": "Joao Farias Dos Santos ", "Funcao": "Aux De Manutenção "}, {"Nome": "Jonas Dos Santos", "Funcao": "Encarregado De Manutenção "}, {"Nome": "Jose Bonfim Gomes", "Funcao": "Encarregado Manutenção "}, {"Nome": "Marivio Antônio De Oliveira ", "Funcao": "Aux De Manutenção "}, {"Nome": "William Silva Conceição", "Funcao": "Gestor De Manutenção"}], "inscritos": [{"Nome": "Gerson Marlon Freschi", "Funcao": "Aux De Escrita"}, {"Nome": "João Farias Dos Santos", "Funcao": "Porteiro "}, {"Nome": "Antônio De Sousa Neto ", "Funcao": "Encarregado Da Pintura"}, {"Nome": "Francisco Carvalho ", "Funcao": "Auxiliar Da Escrita "}], "realizados": [{"Nome": "Expedito Soares De Souza", "Funcao": "Presente"}, {"Nome": "Francisco Carvalho ", "Funcao": "Presente"}, {"Nome": "Gerson Marlon Freschi", "Funcao": "Presente"}, {"Nome": "João Farias Dos Santos", "Funcao": "Presente"}, {"Nome": "José Bonfim Gomes Da Costa", "Funcao": "Presente"}]}, "Jd. Novo Oriente": {"esperados": [{"Nome": "Anderson Carlos Da Silva Santos", "Funcao": "Manutenção"}, {"Nome": "Anderson Dos Santos", "Funcao": "-"}, {"Nome": "Fabio Alexandre De Oliveira", "Funcao": "Manutenção"}, {"Nome": "Izaias Reis Alves", "Funcao": "Manutenção"}, {"Nome": "Jonas Souza Dias", "Funcao": "Manutenção"}, {"Nome": "Jose Braz Dos Reis", "Funcao": "Manutenção"}, {"Nome": "Jose Jovino Da Silva", "Funcao": "Manutenção"}, {"Nome": "Josimario Felix Pereira", "Funcao": "Manutenção"}, {"Nome": "Josue Souza Abreu", "Funcao": "Pedreiro"}, {"Nome": "Osiel Teixeira Machado", "Funcao": "Manutenção"}, {"Nome": "Paulo Cesar Peres Amorim", "Funcao": "Manutenção"}], "inscritos": [{"Nome": "Osiel Teixeira Machado ", "Funcao": "Ajudante "}, {"Nome": "Jonas Souza Dias ", "Funcao": "Porteiro "}, {"Nome": "Josué Souza Abreu ", "Funcao": "Pedreiro "}, {"Nome": "Fabio Alexandrian Oliveira Rg 372818997", "Funcao": "Som"}, {"Nome": "Paulo César Peres Amorim ", "Funcao": "Voluntário "}, {"Nome": "José Jovino Da Silva ", "Funcao": "Porteiro "}, {"Nome": "Izaias Reis Alves ", "Funcao": "Coordenador Manutenção "}], "realizados": [{"Nome": "Fabio Alexandrian Oliveira", "Funcao": "Presente"}, {"Nome": "Izaias Reis Alves ", "Funcao": "Presente"}, {"Nome": "Jonas Souza Dias ", "Funcao": "Presente"}, {"Nome": "José Jovino Da Silva ", "Funcao": "Presente"}, {"Nome": "Josué Souza Abreu ", "Funcao": "Presente"}, {"Nome": "Osiel Teixeira Machado ", "Funcao": "Presente"}, {"Nome": "Paulo César Peres Amorim ", "Funcao": "Presente"}]}, "Jd. Piracuama": {"esperados": [{"Nome": "Ernando Domingos Dos Santos", "Funcao": "Ajudante Geral"}, {"Nome": "Pedro Arnaldo Gonçalves Junior", "Funcao": "Ajudante Geral"}, {"Nome": "Pedro Enoque Da Silva", "Funcao": "Enc. De Manutenção"}, {"Nome": "Robson Ferreira", "Funcao": "Ajudante Geral"}], "inscritos": [{"Nome": "Pedro Arnaldo Gonçalves Junior ", "Funcao": "Manutenção "}, {"Nome": "Ernando Domingos Dos Santos", "Funcao": "Aux. Manutenção"}], "realizados": [{"Nome": "Ernando Domingos Dos Santos", "Funcao": "Presente"}]}, "Jd. Sete Lagos": {"esperados": [{"Nome": "Cícero Pedro Dos Santos ", "Funcao": "Ajudante Geral/Corta Mato"}, {"Nome": "Daniel José Dos Santos ", "Funcao": "Ajudante Geral "}, {"Nome": "Francisco Francion Da Silva", "Funcao": "Enc. De Manutenção"}, {"Nome": "Isaac Mota", "Funcao": "Enc. De Manutenção"}, {"Nome": "Sidney Correa Da Silva", "Funcao": "-"}, {"Nome": "Wilian Davi De Oliveira Castro Nascimento ", "Funcao": "Ajudante/Pintor "}], "inscritos": [{"Nome": "Claro Pereira De Jesus ", "Funcao": "Auxiliar Da Escrita "}, {"Nome": "Isaac Mota", "Funcao": "Encarregado De Manutenção "}, {"Nome": "Daniel Gomes Dos Santos ", "Funcao": "Porteiro/Patrimônio/Manutenção "}, {"Nome": "Daniel Jos Dos Satos", "Funcao": "Ajudante "}, {"Nome": "Francisco Francion Da Silva", "Funcao": "Encarregado "}], "realizados": [{"Nome": "Antônio Almeida Da Silva", "Funcao": "Presente"}, {"Nome": "Claro Pereira De Jesus ", "Funcao": "Presente"}, {"Nome": "Francisco Francion Da Silva", "Funcao": "Presente"}, {"Nome": "Isaac Mota", "Funcao": "Presente"}, {"Nome": "Wilian Davi De Oliveira Castro Nascimento", "Funcao": "Presente"}]}, "Jd. São Francisco": {"esperados": [{"Nome": "Alvaro Leodorio Ribeiro", "Funcao": "Enc Manutenção"}, {"Nome": "Elizeu Martins Soares", "Funcao": "Ajudante"}, {"Nome": "Fabio Mota Almeida", "Funcao": "Ajudande"}, {"Nome": "Geova Jose De Souza", "Funcao": "Enc Manutenção"}, {"Nome": "Isaias Martins Soares", "Funcao": "Ajudante"}, {"Nome": "Joanilcio Brandão Pereira", "Funcao": "Enc Manutenção"}, {"Nome": "José Carrilho Dias", "Funcao": "Enc Manutenção"}, {"Nome": "Lauro Barbosa Santos", "Funcao": "Pedreiro"}, {"Nome": "Oswaldo Ramolla", "Funcao": "Ajudante"}, {"Nome": "Oswaldo Ramolla Filho", "Funcao": "Ajudante"}, {"Nome": "Valdene Pereira De Arruda", "Funcao": "Enc. De Manutenção"}], "inscritos": [{"Nome": "Isaías Martins Soares ", "Funcao": "Ajudante "}, {"Nome": "Ricardo Marin ", "Funcao": "Eletricista "}, {"Nome": "Geova José De Souza ", "Funcao": "Encarregado De Manutenção "}, {"Nome": "José Carrilho Dias", "Funcao": "Encarregado De Manutenção "}, {"Nome": "Valdeneo Pereira De Arruda ", "Funcao": "Encarregado De Manutenção "}, {"Nome": "Joanilcio Brandão Pereira ", "Funcao": "Encarregado De Manutenção "}, {"Nome": "Oswaldo Ramolla Filho", "Funcao": "Assessor 8.3"}, {"Nome": "Oswaldo Ramolla", "Funcao": "Auxiliar De Manutençao"}], "realizados": [{"Nome": "Almir Da Silva Almeida Junior", "Funcao": "Presente"}, {"Nome": "Alvaro Leodorio Ribeiro", "Funcao": "Presente"}, {"Nome": "Geova José De Souza ", "Funcao": "Presente"}, {"Nome": "Isaías Martins Soares ", "Funcao": "Presente"}, {"Nome": "José Carrilho Dias", "Funcao": "Presente"}, {"Nome": "Oswaldo Ramolla", "Funcao": "Presente"}, {"Nome": "Oswaldo Ramolla Filho", "Funcao": "Presente"}, {"Nome": "Ricardo Marin ", "Funcao": "Presente"}, {"Nome": "Valdeneo Pereira De Arruda ", "Funcao": "Presente"}]}, "Jd. São Lourenço": {"esperados": [{"Nome": "Alexandre Pereira Da Silva", "Funcao": "Servente De Pedreiro / Ajudante"}, {"Nome": "Almerico Borges Dos Santos", "Funcao": "Téc. De Segurança"}, {"Nome": "Elias Costa Rangel", "Funcao": "Servente De Pedreiro / Ajudante"}, {"Nome": "Elias Francisco Viana", "Funcao": "Colaborador Manutenção"}, {"Nome": "Enio Feitosa Maciel", "Funcao": "Pintor"}, {"Nome": "Geonilson Cicero Da Silva", "Funcao": "Colaboador Manutenção"}, {"Nome": "Jose Aparecido Ramos Da Silva", "Funcao": "Colaborador Manutenção"}, {"Nome": "José Carlos Magalhães", "Funcao": "Colaborador Responsavel Da Atividade De Manutenção"}, {"Nome": "Juares De Jesus Souza", "Funcao": "Colaborador Manutenção"}, {"Nome": "Luiz Alves De Sousa", "Funcao": "Colaborador Manutenção"}, {"Nome": "Manoel Joaquim Lindoso", "Funcao": "Colaborador Manutenção"}, {"Nome": "Manoel Moreira De Souza", "Funcao": "Tecnico Segurança Do Trabalho"}, {"Nome": "Marcos Fernandes", "Funcao": "Serralheiro"}, {"Nome": "Mario Lúcio Pereira", "Funcao": "Manutenção Preventiva"}, {"Nome": "Maurício Firmino", "Funcao": "Preventiva"}, {"Nome": "Osvaldo De Oliveira", "Funcao": "Manutenção Preventiva"}, {"Nome": "Valdeci Oliveira Braga", "Funcao": "Manutenção Preventiva"}], "inscritos": [{"Nome": "Manoel Moreira De Souza ", "Funcao": "Monitor De Segurança"}, {"Nome": "José Carlos Magalhães ", "Funcao": "Encarregado Mt "}, {"Nome": "Luis Alves De Souza ", "Funcao": "Auxiliar De Mt "}, {"Nome": "Enio Feitosa ", "Funcao": "Pintor "}, {"Nome": "Maurício Firmino ", "Funcao": "Encarregado De Mt "}, {"Nome": "Elias Rangel ", "Funcao": "Pintor "}], "realizados": [{"Nome": "Elias Rangel ", "Funcao": "Presente"}, {"Nome": "Enio Feitosa ", "Funcao": "Presente"}, {"Nome": "José Carlos Magalhães ", "Funcao": "Presente"}, {"Nome": "Luis Alves De Souza ", "Funcao": "Presente"}, {"Nome": "Manoel Lindoso", "Funcao": "Presente"}, {"Nome": "Manoel Moreira De Souza ", "Funcao": "Presente"}, {"Nome": "Maurício Firmino ", "Funcao": "Presente"}]}, "Jd. São Luiz": {"esperados": [{"Nome": "Alexandre Rodrigues Souza", "Funcao": "-"}, {"Nome": "Edilson Braga Da Silva", "Funcao": "-"}, {"Nome": "Jaime Clemente Dos Santos", "Funcao": "Ajudante Geral"}, {"Nome": "Johnny Alves De Azevedo", "Funcao": "-"}, {"Nome": "Lindomar Pereira De Lira Filho", "Funcao": "-"}, {"Nome": "Odair Rocha De Souza", "Funcao": "Enc. De Manutenção"}, {"Nome": "Richard Lacerda", "Funcao": "-"}], "inscritos": [{"Nome": "Johnny Alves De Azevedo", "Funcao": "Auxiliar Escrita"}, {"Nome": "Walter Campos De Oliveira ", "Funcao": "Encarregado De Manutenção "}, {"Nome": "Givaldo Oliveira De Santana", "Funcao": "Encarregado De Manutenção"}, {"Nome": "Edilson Braga Da Silva", "Funcao": "Encarregado De Manutenção"}, {"Nome": "Edilson Braga Da Silva ", "Funcao": "Encarregado Manutenção "}, {"Nome": "Jaime Clemente Dos Santos ", "Funcao": "Ax Manutenção "}, {"Nome": "Elias Adriano Mizael ", "Funcao": "Ajudante"}], "realizados": [{"Nome": "Edilson Braga Da Silva", "Funcao": "Presente"}, {"Nome": "Elias Adriano Mizael ", "Funcao": "Presente"}, {"Nome": "Givaldo Oliveira De Santana", "Funcao": "Presente"}, {"Nome": "Jaime Clemente Dos Santos ", "Funcao": "Presente"}, {"Nome": "Walter Campos De Oliveira ", "Funcao": "Presente"}]}, "Jd. Umarizal": {"esperados": [{"Nome": "Carlos Alberto Conceição Campos", "Funcao": "Ajudante Geral"}, {"Nome": "Cassio Eduardo Batista", "Funcao": "Ajudante Geral"}, {"Nome": "Cornelio Pereira Dos Santos", "Funcao": "Auxiliar Manutenção"}, {"Nome": "Édson Milton Moitinho", "Funcao": "Encarregado De Manutenção"}, {"Nome": "Fabiano Araújo Pereira", "Funcao": "Auxiliar De Manutenção "}, {"Nome": "Helio Yossumo Chinen", "Funcao": "Auxiliar Da Manutenção"}, {"Nome": "Laércio Pereira Da Costa", "Funcao": "Auxiliar Da Manutenção"}, {"Nome": "Marcos Ottoni Dias Avelar", "Funcao": "Auxiliar Da Manutenção"}, {"Nome": "Rodrigo Francisco Da Silva", "Funcao": "Auxiliar Da Manutenção"}, {"Nome": "Tobias Dias Pereira", "Funcao": "Auxiliar Manutenção"}], "inscritos": [{"Nome": "Marcos Otoni Dias Avelar", "Funcao": "Cozinheiro"}, {"Nome": "Cassio Eduardo Batista ", "Funcao": "Encarregado De Manutenção "}, {"Nome": "Marcos Borges Stockler ", "Funcao": "Brigadista"}, {"Nome": "Edson Milton Moitinho", "Funcao": "Manutenção"}, {"Nome": "Carlos Alberto Conceição Campos ", "Funcao": "Escrita "}, {"Nome": "Cornelio Pereira Dos Santos", "Funcao": "Controlador De Som"}], "realizados": [{"Nome": "Carlos Alberto Conceição Campos ", "Funcao": "Presente"}, {"Nome": "Cassio Eduardo Batista ", "Funcao": "Presente"}, {"Nome": "Cornelio Pereira Dos Santos", "Funcao": "Presente"}, {"Nome": "Edson Milton Moitinho", "Funcao": "Presente"}, {"Nome": "Marcos Borges Stockler ", "Funcao": "Presente"}, {"Nome": "Marcos Otoni Dias Avelar", "Funcao": "Presente"}]}, "Jd. Vera Cruz": {"esperados": [{"Nome": "Allan Marques Bezerra Barbosa", "Funcao": "Manutenção"}, {"Nome": "Guilherme Marques Da Silva", "Funcao": "Ajudante Geral"}, {"Nome": "Jorge Francisco  De Assis ", "Funcao": "Porteiro"}, {"Nome": "Jose Antonio Santos", "Funcao": "Portaria"}, {"Nome": "José Augusto Da Silva", "Funcao": "Encarregado De Manutenção"}, {"Nome": "Matheus Gomes Silva", "Funcao": "Manutenção "}], "inscritos": [{"Nome": "Allan Marques Bezerra Barbosa", "Funcao": "Aux De Escrita"}], "realizados": [{"Nome": "Allan Marques Bezerra Barbosa", "Funcao": "Presente"}, {"Nome": "José Antônio Santos", "Funcao": "Presente"}]}, "Jd. Ângela": {"esperados": [{"Nome": "Adston Alberto Santos Silva ", "Funcao": "Ajudante Geral"}, {"Nome": "Agnaldo José Dos Santos ", "Funcao": "Ajudante Geral "}, {"Nome": "Alberes Alves Santana ", "Funcao": "Ajudante Geral "}, {"Nome": "Alvino Xavier ", "Funcao": "Encarregado/Manutenção "}, {"Nome": "Aparecido Ermeson Ivo Da Silva De Souza ", "Funcao": "Ajudante Geral "}, {"Nome": "Daniel Sá Rocha ", "Funcao": "Ajudante Geral "}, {"Nome": "David Pires De Souza", "Funcao": "Ajudante Geral "}, {"Nome": "Diego Pereira Oliveira ", "Funcao": "Ajudante Geral "}, {"Nome": "Elias Faria Da Silva", "Funcao": "Ajudante Geral "}, {"Nome": "Eliseu Batista De Oliveira ", "Funcao": "Ajudante Geral "}, {"Nome": "Evaldo Balieiro ", "Funcao": "Pedreiro "}, {"Nome": "Evaldo Passos De Oliveira", "Funcao": "Enc. De Manutenção"}, {"Nome": "Fernando Ribeiro Santos ", "Funcao": "Ajudante Geral "}, {"Nome": "Francisco Geferson Mendes Almeida ", "Funcao": "Pintor"}, {"Nome": "Gabriel Sá Rocha ", "Funcao": "Ajudante Geral "}, {"Nome": "Giliard Bezerra De França ", "Funcao": "Ajudante Geral "}, {"Nome": "Gutenberg Silva Santos ", "Funcao": "Ajudante Geral "}, {"Nome": "Heleno Francisco Costa ", "Funcao": "Ajudante Geral "}, {"Nome": "Isael Gomes Bezerra ", "Funcao": "Ajudante Geral "}, {"Nome": "Jessé De Souza Dutra", "Funcao": "Ajudante Geral"}, {"Nome": "João Batista Oliveira ", "Funcao": "Ajudante Geral "}, {"Nome": "José Miguel Da Silva ", "Funcao": "Ajudante Geral "}, {"Nome": "Josenaldo Silva De Oliveira ", "Funcao": "Ajudante Geral "}, {"Nome": "Luiz Wesley Nascimento Galdino", "Funcao": "Ajudante Geral "}, {"Nome": "Maicon Gonçalves De Almeida ", "Funcao": "Ajudante Geral "}, {"Nome": "Marcelo José Da Silva ", "Funcao": "Encarregado/Manutenção "}, {"Nome": "Marcio Turcci", "Funcao": "Encarregado/Pedreiro "}, {"Nome": "Marcos José Ferraria Da Silva ", "Funcao": "Técnico De Segurança Do Trabalho "}, {"Nome": "Matheus Costa Nunes ", "Funcao": "Ajudante Geral "}, {"Nome": "Patrick Da Silva Santanna", "Funcao": "Monitor De Segurança"}, {"Nome": "Paulo Patrick Da Silva ", "Funcao": "Ajudante Geral "}, {"Nome": "Pedro Santino De Souza ", "Funcao": "Ajudante Geral "}], "inscritos": [{"Nome": "Sergio Ferreira ", "Funcao": "Ajudante Geral"}, {"Nome": "Paulo Patrick Da Silva Santanna ", "Funcao": "Monitor De Segurança "}, {"Nome": "Heleno Francisco Da Costa ", "Funcao": "Monitor "}, {"Nome": "Idalmo Costa Da Paixão ", "Funcao": "Marceneiro/ Carpinteiro "}], "realizados": [{"Nome": "Idalmo Costa Da Paixão ", "Funcao": "Presente"}]}, "M'Boi Mirim": {"esperados": [{"Nome": "Adenílson Barbosa Santos", "Funcao": "Pedreiro"}, {"Nome": "Carlos De Jesus Silva", "Funcao": "Eletricista"}, {"Nome": "Gilson Maximiano Deolino", "Funcao": "Monitor De Segurança "}, {"Nome": "Hermenegildo Pereira Da Silva", "Funcao": "Encarregado De Manutenção "}, {"Nome": "Joanderson Santos De Sousa Vitorino", "Funcao": "Ajudante"}, {"Nome": "José Ezequiel Gomes", "Funcao": "Ajudante"}, {"Nome": "José Geraldo Ribeiro Da Silva", "Funcao": "Ajudante"}, {"Nome": "Márcio Rogério Chaves", "Funcao": "Ajudante "}, {"Nome": "Moisés De Sousa Fernandes", "Funcao": "Coord. De Manutenção"}, {"Nome": "Olívio De Oliveira ", "Funcao": "Ajudante "}, {"Nome": "Oriques Gallo Da Silva", "Funcao": "Eletricista "}, {"Nome": "Valdenilson Gracino Dos Santos", "Funcao": "Eletricista "}], "inscritos": [{"Nome": "Gilson Maximiano Deolino", "Funcao": "Monitor De Segurança "}, {"Nome": "Luciano De Freitas Lopes", "Funcao": "Monitor De Segurança "}, {"Nome": "Antonio Aparecido Soares", "Funcao": "Aux. Manutenção "}, {"Nome": "Dalmo Guimarães Lima", "Funcao": "Aux. Manutenção "}, {"Nome": "Manoel Ornel Fernandes", "Funcao": "Encarregado De Manutenção"}, {"Nome": "José Aparecido De Oliveira", "Funcao": "Encarregado De Manutenção "}, {"Nome": "José Ezequiel Gomes", "Funcao": "Aux. Manutenção "}, {"Nome": "José Geraldo Ribeiro Da Silva", "Funcao": "Aux. Manutenção "}, {"Nome": "Olivio De Oliveira", "Funcao": "Aux. Manutenção "}, {"Nome": "Edmilson Marques Da Silva", "Funcao": "Aux. Manutenção "}, {"Nome": "Moisés De Sousa Fernandes ", "Funcao": "Monitor De Segurança "}, {"Nome": "Dalmo Guimarães Lima ", "Funcao": "Músico "}, {"Nome": "Carlos De Jesus Silva ", "Funcao": "Eletricista "}], "realizados": [{"Nome": "Antonio Aparecido Soares", "Funcao": "Presente"}, {"Nome": "Carlos De Jesus Silva ", "Funcao": "Presente"}, {"Nome": "Dalmo Guimarães Lima ", "Funcao": "Presente"}, {"Nome": "José Ezequiel Gomes", "Funcao": "Presente"}, {"Nome": "José Geraldo Ribeiro Da Silva", "Funcao": "Presente"}, {"Nome": "Manoel Ornel Fernandes", "Funcao": "Presente"}, {"Nome": "Moisés De Sousa Fernandes ", "Funcao": "Presente"}, {"Nome": "Olivio De Oliveira", "Funcao": "Presente"}]}, "Piraporinha": {"esperados": [{"Nome": "Altemar Pereira Dos Santos", "Funcao": "Pedreiro/Armador"}, {"Nome": "Andre Silvestre Albuquerque Silva ", "Funcao": "Colaborador Manutenção/Preventiva"}, {"Nome": "Andrelino Rodrigues", "Funcao": "Colaborador Manutenção/Preventiva"}, {"Nome": "Antonio Marcos Da Silva", "Funcao": "Colaborador Manutenção/Preventiva"}, {"Nome": "Antonio Santos Souza", "Funcao": "Colaborador Manutenção/Preventiva"}, {"Nome": "Arthur Barbosa Costa", "Funcao": "Colaboradro Manutenção/Preventiva"}, {"Nome": "Cassio Eli Da Silva", "Funcao": "Colaborador Manutenção/Preventiva"}, {"Nome": "Gerlado Ferreira Ribeiro", "Funcao": "Colaborador Manutenção/Preventiva"}, {"Nome": "Idalmo Costa Da Paixao", "Funcao": "Colaborador Manutenção/Preventiva/Marceneiro"}, {"Nome": "Jefferson Da Silva Barreto Rodrigues", "Funcao": "Colaborador Manutenção/Preventiva"}, {"Nome": "João Maria Dantas", "Funcao": "Colaborador Manutenção/Preventiva"}, {"Nome": "Jodenildo Ferreira Dos Santos Junior", "Funcao": "Eletricista"}, {"Nome": "Jorge Luis Alves", "Funcao": "Colaborador De Manutenção"}, {"Nome": "Jose Agnaldo Pereira Dos Santos", "Funcao": "Colaborador Manutenção/Preventiva/Pedreiro/Armador"}, {"Nome": "Jose Fernando Caetano", "Funcao": "Preventiva"}, {"Nome": "Lucas Guilherme Ancermo Pereira", "Funcao": "Colaborador Manutenção/Preventiva"}, {"Nome": "Marcelo Vitor Vasconselos", "Funcao": "Colaborador Manutenção/Preventiva"}, {"Nome": "Michel De Oliveira Lima", "Funcao": "Colaborador Manutenção/Preventiva"}, {"Nome": "Nicolas Kael Santos Pereira", "Funcao": "Colaborador Manutenção/Preventiva"}, {"Nome": "Orlando Dantas", "Funcao": "Colaborador Manutenção/Preventiva"}, {"Nome": "Pedro Ferreira De Brito", "Funcao": "Colaborador Manutenção/Preventiva"}, {"Nome": "Samuel Moreira Alves", "Funcao": "Colaborador Responsável Da Atividade Manutenção/Preventiva"}], "inscritos": [{"Nome": "Samuel Moreira Alves ", "Funcao": "Encarregado De Manutenção "}, {"Nome": "Pedro Ferreira De Brito ", "Funcao": "Desempregado"}, {"Nome": "José Fernando Caetano ", "Funcao": "Encarregado De Manutenção "}, {"Nome": "Arthur Barbosa Costa ", "Funcao": "Auxiliar De Jovens / Instrutor / Músico"}], "realizados": [{"Nome": "Arthur Barbosa Costa ", "Funcao": "Presente"}, {"Nome": "José Fernando Caetano ", "Funcao": "Presente"}, {"Nome": "Pedro Ferreira De Brito ", "Funcao": "Presente"}, {"Nome": "Samuel Moreira Alves ", "Funcao": "Presente"}]}, "Pq. Do Lago": {"esperados": [{"Nome": "José Aparecido De Oliveira", "Funcao": "Enc. De Manutenção"}, {"Nome": "Luciano De Freitas Lopes ", "Funcao": "Encarregado Da Manutenção "}, {"Nome": "Paulo Sérgio Souza Santos ", "Funcao": "Encarregado Da Manutenção "}, {"Nome": "Valmir Arminio De Souza ", "Funcao": "Eletricista "}], "inscritos": [], "realizados": [{"Nome": "José Aparecido De Oliveira", "Funcao": "Presente"}, {"Nome": "Luciano De Freitas Lopes", "Funcao": "Presente"}]}, "Pq. Fernanda": {"esperados": [{"Nome": "Davi Cláudio Batista Da Silva", "Funcao": "Enc. De Manutenção"}, {"Nome": "Erick Henrique Rezende Da Silva", "Funcao": "Monitor De Segurança"}, {"Nome": "Gilmar Francisco De Lima", "Funcao": "Ajudante Geral"}, {"Nome": "João Batista Alves Cruz", "Funcao": "Ajudante Geral"}, {"Nome": "Jonas Guilherme Correa", "Funcao": "Monitor De Segurança"}, {"Nome": "Marcos Nobre Guimarães", "Funcao": "Ajudante Geral"}, {"Nome": "Marcos Rezende Da Silva. Rg 42246021-7", "Funcao": "Ajudante. Adesão 6"}, {"Nome": "Valdnei Rezende Da Silva", "Funcao": "Enc. De Manutenção"}, {"Nome": "Vitor Henrique Galante De Lima", "Funcao": "Eletricista"}], "inscritos": [{"Nome": "Davi Claudio ", "Funcao": "Auxiliar Patrimônio "}, {"Nome": "Valdnei Rezende Da Silva ", "Funcao": "Encarregado De Manutenção "}, {"Nome": "João Batista Alves Cruz ", "Funcao": "Encarregado Manutenção "}, {"Nome": "Erick Henrique Rezende Da Silva ", "Funcao": "Monitor De Segurança "}, {"Nome": "Marcos Nobre Guimaraes ", "Funcao": "Ajudante Geral "}, {"Nome": "Gilmar Francisco De Lima ", "Funcao": "Aux.Manutencao"}, {"Nome": "Davi Claudio Batista Da Silva ", "Funcao": "Ajudante "}], "realizados": [{"Nome": "Davi Claudio Batista Da Silva ", "Funcao": "Presente"}, {"Nome": "Erick Henrique Rezende Da Silva ", "Funcao": "Presente"}, {"Nome": "Gilmar Francisco De Lima ", "Funcao": "Presente"}, {"Nome": "João Batista Alves Cruz ", "Funcao": "Presente"}, {"Nome": "Valdnei Rezende Da Silva ", "Funcao": "Presente"}]}, "Pq. Maria Helena": {"esperados": [{"Nome": "Antonio Luis De Assis", "Funcao": "Encarregado De Manutenção"}, {"Nome": "Antonio Neto Da Silva", "Funcao": "Colaborador De Manutenção"}, {"Nome": "Claudio Marcelino Pires De Laia", "Funcao": "Encarregado De Manutenção"}, {"Nome": "Crispiniano Ferreira Mendes", "Funcao": "Colaborador De Manutenção"}, {"Nome": "Dilson Santos", "Funcao": "Colaborador De Manutenção"}, {"Nome": "Ediel José De Souza", "Funcao": "Colaborador De Manutenção"}, {"Nome": "Edson Antonio Santezo", "Funcao": "Colaborador Da Manutenção"}, {"Nome": "Gilvan Oliveira De Brito", "Funcao": "Colaborador Manutenção"}, {"Nome": "José Francisco De Moura Filho", "Funcao": "Colaborador De Manutenção"}, {"Nome": "Josinaldo Amorim Brito", "Funcao": "Colaborador De Manutenção"}, {"Nome": "Leandro De Souza Miranda", "Funcao": "Colaborador De Manutenção"}, {"Nome": "Marcelo Leme Santos", "Funcao": "Téc. De Segurança"}, {"Nome": "Valdecir Cardoso De Sá", "Funcao": "Colaborador De Manutenção"}, {"Nome": "Wesley Marcos Dos Santos", "Funcao": "Encarregado De Manutenção"}], "inscritos": [{"Nome": "Deusdete José Da Costa ", "Funcao": "Pintor "}, {"Nome": "Antonio Neto Da Silva", "Funcao": "Aux De Serviços Gerais"}, {"Nome": "Gilvan Oliveira De Brito ", "Funcao": "Monitor De Segurança "}, {"Nome": "Claudio Marcelino Pires De Laia", "Funcao": "Encarregado "}, {"Nome": "Valdecir Cardoso De Sa", "Funcao": "Ajudante "}, {"Nome": "Antonio Neto Da Solva", "Funcao": "Aux Geral"}, {"Nome": "Wesley Marcos Dos Santos ", "Funcao": "Encarregado De Manutenção "}], "realizados": [{"Nome": "Antonio Neto Da Solva", "Funcao": "Presente"}, {"Nome": "Claudio Marcelino Pires De Laia", "Funcao": "Presente"}, {"Nome": "Deusdete José Da Costa ", "Funcao": "Presente"}, {"Nome": "Edson Antonio Santezo", "Funcao": "Presente"}, {"Nome": "José Franscisco De Moura", "Funcao": "Presente"}, {"Nome": "Leandro De Souza Miranda", "Funcao": "Presente"}, {"Nome": "Valdecir Cardoso De Sa", "Funcao": "Presente"}, {"Nome": "Wesley Marcos Dos Santos ", "Funcao": "Presente"}]}, "Pq. Santo Antônio": {"esperados": [{"Nome": "Adriano Carneiro Da Silva ", "Funcao": "Agente De Segurança "}, {"Nome": "Alexandre De Oliveira", "Funcao": "Enc. De Manutenção"}, {"Nome": "Ismael Joaquim Machado ", "Funcao": "Pintor De Obras"}, {"Nome": "José Luciano Guedes Dos Santos ", "Funcao": "Operador De Máquinas "}, {"Nome": "Miguel Soares Da Silva ", "Funcao": "Aposentado "}, {"Nome": "Sérgio Messias Ramos", "Funcao": "Técnico Em Eletromecânica "}], "inscritos": [{"Nome": "Miguel Soares Da Silva", "Funcao": "Encarregado Manutenção"}, {"Nome": "Luiz Carlos Mendes Da Silva", "Funcao": "Auxiliar Da Escrita"}, {"Nome": "Alexandre De Oliveira", "Funcao": "Encarregado De Manutenção "}, {"Nome": "Antônio Marcos Dos Santos", "Funcao": "Encarregado De Manutenção "}, {"Nome": "Sergio Messias Ramos", "Funcao": "Eletricista"}, {"Nome": "Marcelo Paiva Mendonça", "Funcao": "Auxiliar De Manutenção"}, {"Nome": "Jose Luciano Guedes Dos Santos", "Funcao": "Auxiliar De Manutenção"}, {"Nome": "Ismael Joaquim Machado", "Funcao": "Pintor"}], "realizados": [{"Nome": "Antônio Marcos Dos Santos", "Funcao": "Presente"}, {"Nome": "Ismael Joaquim Machado", "Funcao": "Presente"}, {"Nome": "Jose Luciano Guedes Dos Santos", "Funcao": "Presente"}, {"Nome": "Manoel Ribeiro De Santana", "Funcao": "Presente"}, {"Nome": "Sergio Messias Ramos", "Funcao": "Presente"}]}, "Riviera Paulista": {"esperados": [{"Nome": "Altair Anastácio Floriano Maciel ", "Funcao": "Auxiliar De Manutenção "}, {"Nome": "Carlos Da Silva Pereira ", "Funcao": "Auxiliar De Manutenção "}, {"Nome": "Celso Mariano Da Silva ", "Funcao": "Pintor "}, {"Nome": "Giovanildo Da Costa Americo Vieira", "Funcao": "Monitor De Segurança"}, {"Nome": "Kleber Pereira Da Silva ", "Funcao": "Auxiliar De Manutenção "}, {"Nome": "Luiz Augusto De Almeida", "Funcao": "Monitor De Segurança"}, {"Nome": "Luiz Gonzaga De Almeida ", "Funcao": "Auxiliar De Manutenção "}, {"Nome": "Marcos Donizete Nunes ", "Funcao": "Encarregado Da Manutenção "}, {"Nome": "Ricardo Lemos Reis ", "Funcao": "Auxiliar De Manutenção "}, {"Nome": "Samuel Correa ", "Funcao": "Auxiliar De Manutenção "}, {"Nome": "Wellington Cavallari De Almeida ", "Funcao": "Auxiliar De Manutenção "}], "inscritos": [{"Nome": "22,688,664-5", "Funcao": "Adm/Manut."}, {"Nome": "Luiz Augusto De Almeida", "Funcao": "Adm/Manut."}, {"Nome": "Giovanildo Da Costa Américo Vieira ", "Funcao": "Eletricista "}, {"Nome": "Giovanildo Da Costa Americo Vieira ", "Funcao": "Eletricista "}, {"Nome": "Carlos Da Silva Pereira ", "Funcao": "Porteiro "}], "realizados": [{"Nome": "Carlos Da Silva Pereira ", "Funcao": "Presente"}, {"Nome": "Luiz Augusto De Almeida", "Funcao": "Presente"}]}, "Vila Remo": {"esperados": [{"Nome": "Anderson Pereira Dos Santos", "Funcao": "Engenheiro Civil"}, {"Nome": "Douglas Gomes Silva", "Funcao": "Eletricista"}, {"Nome": "Gideon Da Silva Urbano", "Funcao": "Eletricista"}, {"Nome": "Nelsonilio Pereira Dos Santos", "Funcao": "Eletricista"}, {"Nome": "Zilton Costa Guedes", "Funcao": "Enc. De Manutenção"}], "inscritos": [{"Nome": "Vinícius Matos Cruz Santos", "Funcao": "Manutenção "}, {"Nome": "Zilton Costa Guedes ", "Funcao": "Encarregado De Manutenção "}, {"Nome": "Antonino Costa Guedes ", "Funcao": "Encarregado De Manutenção "}, {"Nome": "Noelto Galvão Costa", "Funcao": "Encarregado Da Manutenção "}, {"Nome": "Luiz Carlos De Assis Silvério ", "Funcao": "Manutenção "}], "realizados": [{"Nome": "Antonino Costa Guedes ", "Funcao": "Presente"}, {"Nome": "Dorival Alves Viana", "Funcao": "Presente"}, {"Nome": "Noelto Galvão Costa", "Funcao": "Presente"}, {"Nome": "Vinícius Matos Cruz Santos", "Funcao": "Presente"}, {"Nome": "Zilton Costa Guedes ", "Funcao": "Presente"}]}, "Vila Santa Lúcia": {"esperados": [{"Nome": "Adriano Pereira Da Silva Filho", "Funcao": "Colaborador De Manutenção / Marceneiro"}, {"Nome": "Antonio Lira", "Funcao": "Colaborador De Manutenção"}, {"Nome": "Avelino Rodrigues Souza", "Funcao": "Colaborador De Manutenção"}, {"Nome": "Carlos Alves De Araujo", "Funcao": "Colaborador Responsável Ativ. Manutenção "}, {"Nome": "Jesse Da Silva Oliveira", "Funcao": "Monitor De Segurança"}, {"Nome": "Joel Alves Dutra", "Funcao": "Colaborador De Manutenção"}, {"Nome": "Joel Verissimo Do Nascimento", "Funcao": "Colaborador De Manutenção"}, {"Nome": "José Edmilson Dos Santos", "Funcao": "Colaborador Técnico Em Eletricidade"}, {"Nome": "Lúcio Correia Dos Santos", "Funcao": "Colaborador De Manutenção / Monitor De Segurança / Jardineiro"}, {"Nome": "Lucio Soares Santos", "Funcao": "Colaborador Eletrecista Oficial"}, {"Nome": "Maer José Da Silva", "Funcao": "Colaborador De Manutenção / Jardineiro"}, {"Nome": "Marco Aurélio Sarmento Ferreira", "Funcao": "Colaborador De Manutenção "}, {"Nome": "Niilton Ferreira Sales", "Funcao": "Ajudante Geral"}, {"Nome": "Nivaldo Novaes Santos", "Funcao": "Colaborador Resp. Atividade Manutenção E Monitor De Segurança"}, {"Nome": "Valdemir Eujarcino Dos Santos", "Funcao": "Colaborador De Manutenção"}], "inscritos": [{"Nome": "Jesse Da Silva Oliveira ", "Funcao": "Monitor De Segurança"}, {"Nome": "Carlos Alves De Araujo", "Funcao": "Responsável Ativ. Manutenção (Coordenador)"}, {"Nome": "Lucio Soares Santos", "Funcao": "Eletrecista Oficial  (Coordenador)"}, {"Nome": "Juraci José Teixera", "Funcao": "Manutenção - Colaborador"}, {"Nome": "Nivaldo Novaes Santos", "Funcao": "Responsável Ativ. Manutenção (Coordenador)"}, {"Nome": "Lúcio Correia Dos Santos", "Funcao": "Monitor Segurança Do Trabalho"}, {"Nome": "Avelino Rodrigues Souza", "Funcao": "Manutenção - Colaborador"}, {"Nome": "Nilton Ferreira Sales", "Funcao": "Manutenção - Colaborador"}, {"Nome": "José Edmilson Dos Santos", "Funcao": "Técnico Em Eletricidade"}, {"Nome": "Adriano Pereira Da Silva Filho", "Funcao": "Manutenção - Colaborador"}, {"Nome": "Jesse Da Silva Oliveira", "Funcao": "Monitor Segurança Do Trabalho"}, {"Nome": "Joel Alves Dutra", "Funcao": "Manutenção - Colaborador"}, {"Nome": "Marco Aurélio Sarmento Ferreira", "Funcao": "Manutenção - Colaborador"}], "realizados": [{"Nome": "Adriano Pereira Da Silva Filho", "Funcao": "Presente"}, {"Nome": "Avelino Rodrigues Souza", "Funcao": "Presente"}, {"Nome": "Carlos Alves De Araujo", "Funcao": "Presente"}, {"Nome": "Jesse Da Silva Oliveira", "Funcao": "Presente"}, {"Nome": "Jesse Da Silva Oliveira ", "Funcao": "Presente"}, {"Nome": "Joel Alves Dutra", "Funcao": "Presente"}, {"Nome": "Lucio Soares Santos", "Funcao": "Presente"}, {"Nome": "Nivaldo Novaes Santos", "Funcao": "Presente"}]}};
+
+        // Preencher o select de cara
+        document.addEventListener('DOMContentLoaded', () => {
+            const select = document.getElementById('congregation-select');
+            const congs = Object.keys(dataDetalhes).sort();
+            congs.forEach(cong => {
+                const opt = document.createElement('option');
+                opt.value = cong;
+                opt.textContent = cong;
+                select.appendChild(opt);
+            });
+        });
+
+        function switchTab(tabId) {
+            const btnResumo = document.getElementById('tab-resumo');
+            const btnDetalhes = document.getElementById('tab-detalhes');
+            const viewResumo = document.getElementById('view-resumo');
+            const viewDetalhes = document.getElementById('view-detalhes');
+
+            if (tabId === 'resumo') {
+                btnResumo.className = "pb-3 text-blue-400 border-b-2 border-blue-500 font-semibold focus:outline-none transition-colors text-lg";
+                btnDetalhes.className = "pb-3 text-slate-400 border-b-2 border-transparent hover:text-slate-200 hover:border-slate-500 font-semibold focus:outline-none transition-colors text-lg";
+                viewResumo.classList.remove('hidden');
+                viewDetalhes.classList.add('hidden');
+            } else {
+                btnResumo.className = "pb-3 text-slate-400 border-b-2 border-transparent hover:text-slate-200 hover:border-slate-500 font-semibold focus:outline-none transition-colors text-lg";
+                btnDetalhes.className = "pb-3 text-blue-400 border-b-2 border-blue-500 font-semibold focus:outline-none transition-colors text-lg";
+                viewResumo.classList.add('hidden');
+                viewDetalhes.classList.remove('hidden');
+            }
+        }
+
+        function renderDetails() {
+            const select = document.getElementById('congregation-select');
+            const cong = select.value;
+            const tbodyEsp = document.getElementById('tbody-esp');
+            const tbodyInsc = document.getElementById('tbody-insc');
+            const tbodyReal = document.getElementById('tbody-real');
+            
+            const countEsp = document.getElementById('count-esp');
+            const countInsc = document.getElementById('count-insc');
+            const countReal = document.getElementById('count-real');
+
+            if (!cong) {
+                const emptyState = `<tr><td class="px-6 py-8 text-center text-slate-500 italic">Selecione uma Congregação</td></tr>`;
+                tbodyEsp.innerHTML = emptyState;
+                tbodyInsc.innerHTML = emptyState;
+                tbodyReal.innerHTML = emptyState;
+                countEsp.textContent = '0';
+                countInsc.textContent = '0';
+                countReal.textContent = '0';
+                return;
+            }
+
+            const esperados = dataDetalhes[cong] && dataDetalhes[cong].esperados ? dataDetalhes[cong].esperados : [];
+            const inscritos = dataDetalhes[cong] && dataDetalhes[cong].inscritos ? dataDetalhes[cong].inscritos : [];
+            const realizados = dataDetalhes[cong] && dataDetalhes[cong].realizados ? dataDetalhes[cong].realizados : [];
+
+            // Ordenar alfabeticamente
+            esperados.sort((a, b) => a.Nome.localeCompare(b.Nome));
+            inscritos.sort((a, b) => a.Nome.localeCompare(b.Nome));
+            realizados.sort((a, b) => a.Nome.localeCompare(b.Nome));
+
+            countEsp.textContent = esperados.length;
+            countInsc.textContent = inscritos.length;
+            countReal.textContent = realizados.length;
+
+            // Função para gerar as linhas da tabela
+            const generateRows = (items, colorClass) => {
+                if (items.length === 0) return `<tr><td class="px-6 py-8 text-center text-slate-500 italic">Nenhum registro encontrado</td></tr>`;
+                return items.map(item => `
+                    <tr class="hover:bg-slate-700/50 transition-colors group">
+                        <td class="px-6 py-3 font-medium text-slate-200 group-hover:text-${colorClass}-300 transition-colors">${item.Nome}</td>
+                    </tr>
+                `).join('');
+            };
+
+            tbodyEsp.innerHTML = generateRows(esperados, 'blue');
+            tbodyInsc.innerHTML = generateRows(inscritos, 'indigo');
+            tbodyReal.innerHTML = generateRows(realizados, 'emerald');
+        }
+    </script>
+</body>
+</html>

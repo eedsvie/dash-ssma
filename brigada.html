@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Brigadistas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            bg: '#0f172a',
+                            card: '#1e293b',
+                            text: '#f1f5f9',
+                            muted: '#94a3b8'
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'slide-up': 'slideUp 0.5s ease-out'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(10px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            color: #f1f5f9;
+        }
+
+        .card {
+            background: #1e293b;
+            border-radius: 16px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.5);
+            transition: all 0.3s ease;
+            border: 1px solid #334155;
+            backdrop-filter: blur(10px);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.5);
+            border-color: #3b82f6;
+        }
+
+        .nav-btn {
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.5);
+        }
+
+        .nav-btn:not(.active):hover {
+            background-color: #334155;
+            color: #f8fafc;
+        }
+    </style>
+</head>
+
+<body class="p-6 min-h-screen bg-slate-900">
+    <div class="max-w-7xl mx-auto w-full">
+        <!-- Header -->
+        <header class="mb-8 flex flex-col md:flex-row justify-between items-center gap-4 animate-fade-in">
+            <div>
+                <h1
+                    class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+                    SSMA - Setor 8
+                </h1>
+                <p class="text-slate-400 mt-1 text-lg">Estatísticas do Treinamento da Brigada de Incêndio</p>
+            </div>
+            <div class="flex bg-slate-800 rounded-xl p-1 shadow-lg border border-slate-700 overflow-x-auto">
+                <button onclick="switchTab('s81_82')" id="btn-s81-82"
+                    class="nav-btn active whitespace-nowrap px-6 py-3 rounded-lg font-semibold text-sm">
+                    Setor 8.1 & 8.2
+                </button>
+                <button onclick="switchTab('s83_84')" id="btn-s83-84"
+                    class="nav-btn whitespace-nowrap px-6 py-3 rounded-lg font-semibold text-sm text-slate-400">
+                    Setor 8.3 & 8.4
+                </button>
+                <button onclick="switchTab('evolution')" id="btn-evolution"
+                    class="nav-btn whitespace-nowrap px-6 py-3 rounded-lg font-semibold text-sm text-slate-400">
+                    Evolução do Quadro
+                </button>
+            </div>
+        </header>
+
+        <!-- Content -->
+        <main id="dashboard-content" class="animate-slide-up">
+            <!-- Rendered via JS -->
+        </main>
+    </div>
+
+    <script>
+        window.dashboardData = {
+            s81_82: {
+                groups: ['8.1 - Nº CO = 7', '8.2 - Nº CO = 7'],
+                current: [74, 68],
+                registered: [101, 108],
+                trained: [84, 89],
+                absent: [17, 19],
+                total: {
+                    current: 142,
+                    registered: 209,
+                    trained: 173,
+                    absent: 36
+                }
+            },
+            s83_84: {
+                groups: ['8.3 - Nº CO = 8', '8.4 - Nº CO = 9'],
+                current: [75, 90],
+                registered: [108, 124],
+                trained: [89, 96],
+                absent: [19, 28],
+                total: {
+                    current: 165,
+                    registered: 232,
+                    trained: 185,
+                    absent: 47
+                }
+            },
+            evolution: {
+                groups: ['8.1 - Nº CO = 7', '8.2 - Nº CO = 7', '8.3 - Nº CO = 8', '8.4 - Nº CO = 9'],
+                current: [74, 68, 75, 90],
+                registered: [101, 108, 108, 124],
+                trained: [84, 89, 89, 96],
+                absent: [17, 19, 19, 28],
+                growth: [10, 21, 14, 6]
+            }
+        };
+    </script>
+    <script>
+        // Register Chart DataLabels plugin
+        Chart.register(ChartDataLabels);
+
+        // State
+        let currentTab = 's81_82';
+        let charts = {};
+
+        // DOM Elements
+        const contentDiv = document.getElementById('dashboard-content');
+        const btnS81_82 = document.getElementById('btn-s81-82');
+        const btnS83_84 = document.getElementById('btn-s83-84');
+        const btnEvolution = document.getElementById('btn-evolution');
+
+        // Global Chart Defaults for Dark Theme
+        Chart.defaults.color = '#94a3b8'; // slate-400
+        Chart.defaults.borderColor = '#334155'; // slate-700
+        Chart.defaults.font.family = "'Inter', sans-serif";
+        Chart.defaults.font.size = 13;
+
+        // Icons (SVG strings)
+        const icons = {
+            users: '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>',
+            check: '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>',
+            chart: '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path></svg>',
+            alert: '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>'
+        };
+
+        function switchTab(tab) {
+            currentTab = tab;
+
+            const buttons = {
+                's81_82': btnS81_82,
+                's83_84': btnS83_84,
+                'evolution': btnEvolution
+            };
+
+            Object.values(buttons).forEach(btn => {
+                btn.classList.remove('active');
+                btn.classList.add('text-slate-400');
+            });
+
+            buttons[tab].classList.add('active');
+            buttons[tab].classList.remove('text-slate-400');
+
+            renderDashboard();
+        }
+
+        function renderKPI(title, value, subtext, iconName, colorClass, gradientClass) {
+            return `
+        <div class="card p-6 relative overflow-hidden group">
+            <div class="absolute right-0 top-0 opacity-10 transform translate-x-3 -translate-y-3 group-hover:scale-110 transition-transform duration-500">
+                ${icons[iconName]}
+            </div>
+            <div class="flex items-center justify-between mb-4">
+                <span class="text-sm font-bold text-slate-400 uppercase tracking-widest">${title}</span>
+                <div class="p-3 rounded-xl bg-gradient-to-br ${gradientClass} shadow-lg text-white">
+                    ${icons[iconName].replace('w-8 h-8', 'w-5 h-5')}
+                </div>
+            </div>
+            <div class="text-4xl font-extrabold text-white mb-2 tracking-tight">${value}</div>
+            ${subtext ? `<div class="text-sm text-slate-400 font-medium badge inline-block px-2 py-1 rounded-md bg-slate-800/50 border border-slate-700/50">${subtext}</div>` : ''}
+        </div>
+    `;
+        }
+
+        function renderDashboard() {
+            // Clear existing charts
+            Object.values(charts).forEach(chart => chart.destroy());
+            charts = {};
+
+            const data = window.dashboardData[currentTab];
+            let html = '';
+
+            if (currentTab === 's81_82' || currentTab === 's83_84') {
+                // KPI Section
+                html += '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">';
+                html += renderKPI('Brigadistas 2025', data.total.current, 'Brigadistas Ativos', 'users', 'text-blue-500', 'from-blue-500 to-blue-600');
+                html += renderKPI('Inscrições 2026', data.total.registered, 'Total de inscritos', 'chart', 'text-purple-500', 'from-purple-500 to-purple-600');
+                html += renderKPI('Participou c/ Aproveitamento', data.total.trained, `${((data.total.trained / data.total.registered) * 100).toFixed(1)}% de Aproveitamento`, 'check', 'text-emerald-500', 'from-emerald-500 to-emerald-600');
+                html += renderKPI('Não Compareceu', data.total.absent, `${((data.total.absent / data.total.registered) * 100).toFixed(1)}% de Faltas`, 'alert', 'text-rose-500', 'from-rose-500 to-rose-600');
+                html += '</div>';
+
+                // Charts Section
+                html += `
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="card p-8">
+                    <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                        <span class="w-1 h-8 bg-blue-500 rounded-full"></span>
+                        Visão por Setor
+                    </h3>
+                    <div class="relative h-80">
+                        <canvas id="chart-bar-sector"></canvas>
+                    </div>
+                </div>
+                <div class="card p-8">
+                    <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                        <span class="w-1 h-8 bg-emerald-500 rounded-full"></span>
+                        Status Geral
+                    </h3>
+                    <div class="relative h-80">
+                        <canvas id="chart-doughnut-sector"></canvas>
+                    </div>
+                </div>
+            </div>
+        `;
+
+            } else if (currentTab === 'evolution') {
+                // Evolution Section
+                const totalRegistered = data.registered.reduce((a, b) => a + b, 0);
+                const totalTrained = data.trained.reduce((a, b) => a + b, 0);
+                const totalGrowth = data.growth ? data.growth.reduce((a, b) => a + b, 0) : 51;
+
+                html += '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">';
+                html += renderKPI('Total Inscritos', totalRegistered, 'Todos os Setores', 'users', 'text-blue-500', 'from-blue-500 to-blue-600');
+                html += renderKPI('Total Treinados', totalTrained, 'Todos os Setores', 'check', 'text-emerald-500', 'from-emerald-500 to-emerald-600');
+                html += renderKPI('Aproveitamento Global', `${((totalTrained / totalRegistered) * 100).toFixed(1)}%`, 'Média Geral', 'chart', 'text-purple-500', 'from-purple-500 to-purple-600');
+                html += renderKPI('Evolução do Quadro', `+${totalGrowth}`, 'Crescimento Total', 'chart', 'text-cyan-500', 'from-cyan-500 to-cyan-600');
+                html += '</div>';
+
+                // Charts Section
+                html += `
+            <div class="grid grid-cols-1 gap-8">
+                <div class="card p-8">
+                    <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                        <span class="w-1 h-8 bg-purple-500 rounded-full"></span>
+                        Evolução do Quadro dos Brigadistas por Grupo
+                    </h3>
+                    <div class="relative h-96">
+                        <canvas id="chart-evolution"></canvas>
+                    </div>
+                </div>
+            </div>
+        `;
+            }
+
+            contentDiv.innerHTML = html;
+            initCharts(currentTab, data);
+        }
+
+        function initCharts(tab, data) {
+            const commonOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { padding: 20, usePointStyle: true, pointStyle: 'circle' }
+                    },
+                    datalabels: {
+                        color: '#fff',
+                        font: { weight: 'bold', size: 12 },
+                        formatter: (value) => value > 0 ? value : '',
+                        display: 'auto',
+                        backgroundColor: 'rgba(0,0,0,0.5)',
+                        borderRadius: 4,
+                        padding: 4
+                    }
+                },
+                scales: {
+                    y: {
+                        grid: { color: '#334155' },
+                        beginAtZero: true
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            };
+
+            if (tab === 's81_82' || tab === 's83_84') {
+                const ctxBar = document.getElementById('chart-bar-sector').getContext('2d');
+                charts.bar = new Chart(ctxBar, {
+                    type: 'bar',
+                    data: {
+                        labels: data.groups,
+                        datasets: [
+                            {
+                                label: 'Inscritos',
+                                data: data.registered,
+                                backgroundColor: '#64748b',
+                                borderRadius: 6,
+                                barPercentage: 0.6
+                            },
+                            {
+                                label: 'Participou',
+                                data: data.trained,
+                                backgroundColor: '#10b981',
+                                borderRadius: 6,
+                                barPercentage: 0.6
+                            },
+                            {
+                                label: 'Não Compareceu',
+                                data: data.absent,
+                                backgroundColor: '#f43f5e',
+                                borderRadius: 6,
+                                barPercentage: 0.6
+                            }
+                        ]
+                    },
+                    options: commonOptions
+                });
+
+                const ctxDoughnut = document.getElementById('chart-doughnut-sector').getContext('2d');
+                charts.doughnut = new Chart(ctxDoughnut, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Participou c/ Aproveitamento', 'Não Compareceu'],
+                        datasets: [{
+                            data: [data.total.trained, data.total.absent],
+                            backgroundColor: ['#10b981', '#f43f5e'],
+                            borderWidth: 0,
+                            hoverOffset: 10
+                        }]
+                    },
+                    options: {
+                        ...commonOptions,
+                        plugins: {
+                            ...commonOptions.plugins,
+                            datalabels: {
+                                color: '#fff',
+                                font: { weight: 'bold', size: 14 },
+                                formatter: (value, ctx) => {
+                                    let sum = 0;
+                                    let dataArr = ctx.chart.data.datasets[0].data;
+                                    dataArr.map(data => { sum += data; });
+                                    let percentage = (value * 100 / sum).toFixed(1) + "%";
+                                    return value + '\n(' + percentage + ')';
+                                }
+                            }
+                        },
+                        scales: { display: false },
+                        cutout: '70%'
+                    }
+                });
+
+            } else if (tab === 'evolution') {
+                const ctxEvolution = document.getElementById('chart-evolution').getContext('2d');
+                charts.evolution = new Chart(ctxEvolution, {
+                    type: 'line',
+                    data: {
+                        labels: data.groups,
+                        datasets: [
+                            {
+                                label: '2025',
+                                data: data.current,
+                                borderColor: '#3b82f6',
+                                backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                                borderWidth: 3,
+                                tension: 0.4,
+                                fill: true,
+                                pointBackgroundColor: '#3b82f6',
+                                pointBorderColor: '#fff',
+                                pointBorderWidth: 2,
+                                pointRadius: 6,
+                                pointHoverRadius: 8,
+                                datalabels: {
+                                    align: 'bottom',
+                                    anchor: 'start'
+                                }
+                            },
+                            {
+                                label: '2026',
+                                data: data.trained,
+                                borderColor: '#10b981',
+                                backgroundColor: 'rgba(16, 185, 129, 0.2)',
+                                borderWidth: 3,
+                                tension: 0.4,
+                                fill: true,
+                                pointBackgroundColor: '#10b981',
+                                pointBorderColor: '#fff',
+                                pointBorderWidth: 2,
+                                pointRadius: 6,
+                                pointHoverRadius: 8,
+                                datalabels: {
+                                    align: 'top',
+                                    anchor: 'end'
+                                }
+                            }
+                        ]
+                    },
+                    options: {
+                        ...commonOptions,
+                        plugins: {
+                            ...commonOptions.plugins,
+                            datalabels: {
+                                ...commonOptions.plugins.datalabels,
+                                offset: 6
+                            }
+                        },
+                        scales: {
+                            ...commonOptions.scales,
+                            y: {
+                                ...commonOptions.scales.y,
+                                max: 110,
+                                suggestedMin: 0
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Init
+        switchTab('s81_82');
+    </script>
+</body>
+
+</html>
